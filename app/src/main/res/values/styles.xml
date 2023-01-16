@@ -1,0 +1,73 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+   <style name="AppTheme" parent="android:Theme.Holo.NoActionBar.Fullscreen" />
+        
+  
+    <style name="AppTheme1" parent="AppTheme">
+     
+      <item name="android:capitalize">characters</item>
+      <item name="android:typeface">monospace</item>
+      <item name="android:shadowDx">1.2</item>
+      <item name="android:shadowDy">1.2</item>
+      <item name="android:shadowRadius">2</item>
+      <item name="android:textColor">#494948</item>/> 
+      <item name="android:gravity" >center</item>
+      <item name="android:layout_margin" >3dp</item>
+      <item name="android:textSize" >5pt</item>
+      <item name="android:shadowColor" >#000000</item>
+   </style>
+    
+  
+   <style name="CustomButtonStyle">
+      <item name="android:layout_width">100dp</item>
+      <item name="android:layout_height">38dp</item>
+   </style>
+    -->
+<!-- <style name="CustomDialog" parent="@android:style/android:Theme.Holo.Dialog">-->
+
+<!--    <item name="android:windowFullscreen">true</item>-->
+<!--    <item name="android:windowNoTitle">true</item>-->
+<!--    <item name="android:windowIsFloating">true</item>-->
+<!--    <item name="android:windowContentOverlay">@null</item>    -->
+<!--    <item name="android:windowBackground">@drawable/splash</item>-->
+<!--    <item name="android:windowFrame">@null</item>-->
+<!--    -->
+<!--    -->
+<!-- </style>-->
+ 
+  <style name="full_screen_dialog" parent="@android:style/Theme.Translucent"> 
+
+    <item name="android:windowFrame">@null</item>
+    <item name="android:windowIsFloating">true</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+    <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+   
+</style>
+
+
+
+
+
+    <style name="CustomActionBarTabTextStyle">
+        <item name="android:textColor">#017729</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:typeface">sans</item>
+    </style>
+
+    <style name="CustomActionBarTabStyle" parent="android:style/Widget.Holo.Light.ActionBar.TabView">
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
+    </style>
+
+    <style name="NewsReaderStyle" parent="android:Theme.Holo.Light">
+        <item name="android:actionBarTabTextStyle">@style/CustomActionBarTabTextStyle</item>
+        <item name="android:actionBarTabStyle">@style/CustomActionBarTabStyle</item>
+    </style>
+
+    <!-- <style name="AppTheme" parent="android:Theme.Holo.Light.NoActionBar.Fullscreen"> -->
+<!--    <style name="AppTheme" parent="android:Theme.Holo.Light.NoActionBar"></style>-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar"></style>
+
+</resources>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true" >
+
+    <LinearLayout
+        android:id="@+id/l_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:weightSum="1.0" >
+
+        <TextView
+            android:id="@+id/heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Maximizer"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="250dp"
+            android:layout_height="45dp"
+            android:layout_below="@+id/heading"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/shape"
+            android:ems="10"
+            android:hint="User ID"
+
+            android:paddingLeft="10dp"
+            android:singleLine="true" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="250dp"
+            android:layout_height="45dp"
+            android:layout_below="@+id/username"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/shape"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp" />
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="250dp"
+            android:layout_height="45dp"
+            android:layout_below="@+id/checkbox"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/shape2"
+            android:text="Login"
+            android:textColor="#ffffff" />
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/password"
+            android:button="@drawable/selector"
+            android:text="Save Password"
+            android:textColor="#000000" />
+    </LinearLayout>
+
+</ScrollView>

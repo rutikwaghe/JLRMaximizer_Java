@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">JLRMaximizer</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="print_string">Print</string>
+    <string name="title_activity_login">JLRMaximizer</string>
+    <string name="title_activity_splash_screen">JLRMaximizer</string>
+    <string name="title_activity_my_custom_progress_dialog">MyCustomProgressDialog</string>
+    <string name="title_activity_custom_progress_dialog">CustomProgressDialog</string>
+
+    <!-- LoginActivity -->
+    <string name="u1">https://www.jlrmaximizer.in/login/validate_login_webservice?device=mobile</string>
+    <string name="u2">https://www.jlrmaximizer.in/login/validate_login_webservice?device=mobile</string>
+    <string name="ulogin">https://www.jlrmaximizer.in/login/validate_login_webservice?device=mobile&amp;token=</string>
+    <string name="u3">https://www.jlrmaximizer.in/app/?name=JLRMax</string>
+    <string name="u4">https://www.jlrmaximizer.in/app/?name=JLRMax2</string>
+
+    <!-- MainActivity -->
+    <!-- ShouldOver -->
+    <string name="u5">https://www.jlrmaximizer.in/home/logout_webservice</string>
+    <string name="u6">https://www.jlrmaximizer.in/quotation/view_quotation?rid=</string>
+    <string name="u7">https://www.jlrmaximizer.in/home</string>
+    <string name="u8">https://www.jlrmaximizer.in/pdf_actions/download?rid=</string>
+    <string name="u9">https://www.jlrmaximizer.in/pdf_actions/download_mobile</string>
+    <string name="u10">https://www.jlrmaximizer.in/reports_image/</string>
+    <string name="u11">http://jlrmaximizer.com/PDF/</string>
+    <string name="u12">https://www.jlrmaximizer.in/reports/?uid=</string>
+    <string name="u13">https://www.jlrmaximizer.in/reports/dealer_stats?uid=</string>
+    <string name="u14">https://www.jlrmaximizer.in/home/logout</string>
+    <string name="u15">https://www.jlrmaximizer.in/home/logout_webservice</string>
+    <string name="u16">https://www.jlrmaximizer.in/specifications/jaguar_xf</string>
+    <string name="u17">https://www.jlrmaximizer.in/specifications/jaguar_xj</string>
+    <string name="u18">https://www.jlrmaximizer.in/specifications/discovery_sport</string>
+    <string name="u19">https://www.jlrmaximizer.in/specifications/evoque</string>
+    <string name="u20">https://www.jlrmaximizer.in/specifications/range_rover_405</string>
+    <string name="u21">https://www.jlrmaximizer.in/specifications/range_rover_sport</string>
+    <string name="u22">https://www.jlrmaximizer.in/reports/quotation_list?status=all</string>
+    <string name="u23">https://www.jlrmaximizer.in/reports/quotation_list?status=pending</string>
+    <string name="u24">https://www.jlrmaximizer.in/reports/quotation_list?status=approved</string>
+    <string name="u25">https://www.jlrmaximizer.in/reports/quotation_list?status=denied</string>
+    <string name="u26">https://www.jlrmaximizer.in/reports/quotation_list?status=drafts</string>
+    <string name="u27">https://www.jlrmaximizer.in/calculate#collapseTwo</string>
+    <string name="u28">https://www.jlrmaximizer.in/calculate#collapseThree</string>
+    <string name="u29">https://www.jlrmaximizer.in/</string>
+    <string name="u30">https://www.jlrmaximizer.in/login</string>
+    <string name="u31">https://www.jlrmaximizer.in/home/logout</string>
+    <string name="u32">https://www.jlrmaximizer.in/home/logout_webservice</string>
+
+    <!-- Back -->
+    <string name="u33">https://www.jlrmaximizer.in/login</string>
+    <string name="u34">https://www.jlrmaximizer.in/home</string>
+    <string name="u35">https://www.jlrmaximizer.in/calculate#collapseTwo</string>
+    <string name="u36">https://www.jlrmaximizer.in/home</string>
+    <string name="u37">https://www.jlrmaximizer.in/calculate#collapseThree</string>
+    <string name="u38">https://www.jlrmaximizer.in/reports</string>
+    <string name="u39">https://www.jlrmaximizer.in/feedback</string>
+    <string name="u40">https://www.jlrmaximizer.in/profile_edit</string>
+    <string name="u41">https://www.jlrmaximizer.in/reports/quotation_list?status=denied</string>
+    <string name="u42">https://www.jlrmaximizer.in/reports/viewmore_dlr/</string>
+    <string name="u43">https://www.jlrmaximizer.in/reports/admin_stats</string>
+    <string name="u44">https://www.jlrmaximizer.in/reports/viewmore_usr/</string>
+    <string name="u45">https://www.jlrmaximizer.in/reports/dealer_stats</string>
+    <string name="u46">https://www.jlrmaximizer.in/reports/?uid=</string>
+    <string name="u47">https://www.jlrmaximizer.in/pdf_actions/download_mobile?rid=</string>
+    <string name="u48">https://www.jlrmaximizer.in/reports/quotation_list?uid=</string>
+    <string name="u49">https://www.jlrmaximizer.in/reports?uid=</string>
+    <string name="u50">https://www.jlrmaximizer.in/quotation/view_quotation</string>
+    <string name="u51">https://www.jlrmaximizer.in/reports/quotation_list</string>
+    <string name="u52">https://www.jlrmaximizer.in/specifications</string>
+    <string name="u53">https://www.jlrmaximizer.in/specifications/jaguar</string>
+    <string name="u54">https://www.jlrmaximizer.in/specifications/landrover</string>
+    <string name="u55">https://www.jlrmaximizer.in/specifications/jaguar_xf</string>
+    <string name="u56">https://www.jlrmaximizer.in/specifications/jaguar_xf#</string>
+    <string name="u57">https://www.jlrmaximizer.in/specifications/jaguar_xj#</string>
+    <string name="u58">https://www.jlrmaximizer.in/specifications/jaguar_xj</string>
+    <string name="u59">https://www.jlrmaximizer.in/specifications/discovery_sport</string>
+    <string name="u60">https://www.jlrmaximizer.in/specifications/discovery_sport#</string>
+    <string name="u61">https://www.jlrmaximizer.in/specifications/evoque</string>
+    <string name="u62">https://www.jlrmaximizer.in/specifications/evoque#</string>
+    <string name="u63">https://www.jlrmaximizer.in/specifications/range_rover_405</string>
+    <string name="u64">https://www.jlrmaximizer.in/specifications/range_rover_405#</string>
+    <string name="u65">https://www.jlrmaximizer.in/specifications/range_rover_sport</string>
+    <string name="u66">https://www.jlrmaximizer.in/specifications/range_rover_sport#</string>
+    <string name="u67">jlrmax2016</string>
+    <string name="u68">https://www.jlrmaximizer.in/calculate</string>
+    <string name="u69">https://www.jlrmaximizer.in/quotation/view_usedcar_quotation?rid=</string>
+    <string name="u70">https://www.jlrmaximizer.in/calculate/newcar</string>
+    <string name="u71">https://www.jlrmaximizer.in/calculate/usedcar</string>
+    <string name="u72">https://www.jlrmaximizer.in/leads</string>
+    <string name="u73">https://www.jlrmaximizer.in/calculate/buy_sell_price</string>
+    <string name="u74">https://www.jlrmaximizer.in/calculate/specification</string>
+    <string name="u75">https://www.jlrmaximizer.in/reports/dump</string>
+    <string name="u76">https://www.jlrmaximizer.in/cars/cars_info</string>
+
+    <string name="u77">https://data.findmeacar.in/max/stocks/show</string>
+    <string name="u78">https://data.findmeacar.in/max/stocks/show#</string>
+    <string name="u79">https://data.findmeacar.in/max/dashboard</string>
+    <string name="u80">https://data.findmeacar.in/max/stocks/swap_pending</string>
+
+    <string name="u81">https://www.jlrmaximizer.in/archieve/reports/dealer_stats</string>
+    <string name="u82">https://www.jlrmaximizer.in/archieve/reports/viewmore_usr/</string>
+    <string name="u83">https://www.jlrmaximizer.in/archieve/reports/?uid=</string>
+    <string name="u84">https://www.jlrmaximizer.in/archieve/reports/quotation_list?status=all</string>
+    <string name="u85">https://www.jlrmaximizer.in/archieve/reports/quotation_list?status=pending</string>
+    <string name="u86">https://www.jlrmaximizer.in/archieve/reports/quotation_list?status=approved</string>
+    <string name="u87">https://www.jlrmaximizer.in/archieve/reports/quotation_list?status=denied</string>
+    <string name="u88">https://www.jlrmaximizer.in/archieve/reports/quotation_list?status=drafts</string>
+    <string name="u89">https://www.jlrmaximizer.in/archieve/reports</string>
+    <string name="u90">https://www.jlrmaximizer.in/archieve/quotation/view_quotation?rid=</string>
+    <string name="u91">https://www.jlrmaximizer.in/archieve/quotation/view_quotation</string>
+    <string name="u92">https://www.jlrmaximizer.in/archieve/reports/quotation_list</string>
+    <string name="u93">https://www.jlrmaximizer.in/archieve/reports/quotation_list?uid=</string>
+    <string name="u94">https://www.jlrmaximizer.in/archieve/reports</string>
+    <string name="u95">https://www.jlrmaximizer.in/archieve/reports?uid=</string>
+    <string name="u96">https://www.jlrmaximizer.in/archieve/reports/admin_stats</string>
+    <string name="u97">https://www.jlrmaximizer.in/archieve/pdf_actions/download?rid=</string>
+    <string name="u98">https://www.jlrmaximizer.in/archieve/pdf_actions/download_mobile</string>
+    <string name="u99">https://www.jlrmaximizer.in/archieve/reports_image/</string>
+    <string name="u100">https://www.jlrmaximizer.in/archieve/pdf_actions/download_mobile?rid=</string>
+
+
+    <string name="u104">https://www.jlrmaximizer.in/archieve2/reports/dealer_stats</string>
+    <string name="u105">https://www.jlrmaximizer.in/archieve2/reports/viewmore_usr/</string>
+    <string name="u106">https://www.jlrmaximizer.in/archieve2/reports/?uid=</string>
+    <string name="u107">https://www.jlrmaximizer.in/archieve2/reports/quotation_list?status=all</string>
+    <string name="u108">https://www.jlrmaximizer.in/archieve2/reports/quotation_list?status=pending</string>
+    <string name="u109">https://www.jlrmaximizer.in/archieve2/reports/quotation_list?status=approved</string>
+    <string name="u110">https://www.jlrmaximizer.in/archieve2/reports/quotation_list?status=denied</string>
+    <string name="u111">https://www.jlrmaximizer.in/archieve2/reports/quotation_list?status=drafts</string>
+    <string name="u112">https://www.jlrmaximizer.in/archieve2/reports</string>
+    <string name="u113">https://www.jlrmaximizer.in/archieve2/quotation/view_quotation?rid=</string>
+    <string name="u114">https://www.jlrmaximizer.in/archieve2/quotation/view_quotation</string>
+    <string name="u115">https://www.jlrmaximizer.in/archieve2/reports/quotation_list</string>
+    <string name="u116">https://www.jlrmaximizer.in/archieve2/reports/quotation_list?uid=</string>
+    <string name="u117">https://www.jlrmaximizer.in/archieve2/reports</string>
+    <string name="u118">https://www.jlrmaximizer.in/archieve2/reports?uid=</string>
+    <string name="u119">https://www.jlrmaximizer.in/archieve2/reports/admin_stats</string>
+    <string name="u120">https://www.jlrmaximizer.in/archieve2/pdf_actions/download?rid=</string>
+    <string name="u121">https://www.jlrmaximizer.in/archieve2/pdf_actions/download_mobile</string>
+    <string name="u122">https://www.jlrmaximizer.in/archieve2/reports_image/</string>
+    <string name="u123">https://www.jlrmaximizer.in/archieve2/pdf_actions/download_mobile?rid=</string>
+
+    <string name="u101">https://www.jlrmaximizer.in/resources</string>
+    <string name="u102">https://www.jlrmaximizer.in/leads/index</string>
+    <string name="u103">https://www.jlrmaximizer.in/reports/quotation_list</string>
+
+    <string name="title_activity_jaguar">JaguarActivity</string>
+
+
+    <!-- Following strings is Added by Deepak Tiwari Permission for Permission dialog -->
+    <string name="string_permission_help">Help</string>
+    <string name="string_permission_help_text">The permission is missing.\n\nTo grant this permission click on Settings, then Permissions and turn the permission on.\n\nThen click back twice to return to the app</string>
+    <string name="string_permission_quit">Exit App</string>
+    <string name="string_settings">Settings</string>
+    <!-- Following strings is Added by Deepak Tiwari Permission for Permission dialog -->
+
+    <string name="keystore_password">testing</string>
+    <string name="ssl_pinning_success">Success</string>
+    <string name="ssl_pinning_fail">Failed</string>
+
+</resources>

@@ -11,6 +11,7 @@
     <string name="title_activity_custom_progress_dialog">CustomProgressDialog</string>
 
     <!-- LoginActivity -->
+    <string name="baseUrl">https://www.jlrmaximizer.in/login/</string>
     <string name="u1">https://www.jlrmaximizer.in/login/validate_login_webservice?device=mobile</string>
     <string name="u2">https://www.jlrmaximizer.in/login/validate_login_webservice?device=mobile</string>
     <string name="ulogin">https://www.jlrmaximizer.in/login/validate_login_webservice?device=mobile&amp;token=</string>

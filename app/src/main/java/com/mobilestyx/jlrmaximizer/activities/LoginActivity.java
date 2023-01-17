@@ -1,14 +1,12 @@
-package com.mobilestyx.jlrmaximizer;
+package com.mobilestyx.jlrmaximizer.activities;
 
 import static com.mobilestyx.jlrmaximizer.utils.AppUtils.showAlertDialog;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -18,21 +16,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.mobilestyx.jlrmaximizer.model.LoginRequest;
-import com.mobilestyx.jlrmaximizer.model.LoginResponse;
+import com.mobilestyx.jlrmaximizer.R;
 import com.mobilestyx.jlrmaximizer.remote.ApiClient;
 import com.mobilestyx.jlrmaximizer.remote.UserService;
 import com.mobilestyx.jlrmaximizer.utils.AppUtils;
+import com.mobilestyx.jlrmaximizer.utils.GlobalVariable;
 import com.mobilestyx.jlrmaximizer.utils.MCrypt;
-
-import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -49,6 +43,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        String userAgent = new WebView(this).getSettings().getUserAgentString();
+        GlobalVariable.setUserAgent(userAgent);
 
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
@@ -127,6 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (msgResponse.equals("success")) {
                     linkResponse = response.body().getAsJsonObject().get("link").toString();
                     tokenResponse = response.body().getAsJsonObject().get("token").toString();
+                    mergedLinkWv = getString(R.string.ulogin) + tokenResponse;
 
                     if (checkbox.isChecked() == true) {
                         sharedPreferences.edit().putString("user", encryptedid).apply();
@@ -135,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
                         sharedPreferences.edit().putString("user", "").apply();
                         sharedPreferences.edit().putString("pass", "").apply();
                     }
-//                    GlobalVariable.setUrl(mergedLinkWv);
+                    GlobalVariable.setUrl(mergedLinkWv);
                     Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent1);
                 } else if (msgResponse.contains("edit")) {
@@ -146,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
                         sharedPreferences.edit().putString("user", "").apply();
                         sharedPreferences.edit().putString("pass", "").apply();
                     }
-                    // GlobalVariable.setUrl(linkResponse);
+                    GlobalVariable.setUrl(linkResponse);
                     Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent1);
 

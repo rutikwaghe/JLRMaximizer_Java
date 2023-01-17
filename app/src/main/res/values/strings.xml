@@ -11,7 +11,7 @@
     <string name="title_activity_custom_progress_dialog">CustomProgressDialog</string>
 
     <!-- LoginActivity -->
-    <string name="baseUrl">https://www.jlrmaximizer.in/login/</string>
+    <string name="baseUrl">https://www.jlrmaximizer.in/</string>
     <string name="u1">https://www.jlrmaximizer.in/login/validate_login_webservice?device=mobile</string>
     <string name="u2">https://www.jlrmaximizer.in/login/validate_login_webservice?device=mobile</string>
     <string name="ulogin">https://www.jlrmaximizer.in/login/validate_login_webservice?device=mobile&amp;token=</string>
@@ -160,5 +160,7 @@
     <string name="keystore_password">testing</string>
     <string name="ssl_pinning_success">Success</string>
     <string name="ssl_pinning_fail">Failed</string>
+    <string name="maximizer">Maximizer</string>
+    <string name="user_id">User ID</string>
 
 </resources>

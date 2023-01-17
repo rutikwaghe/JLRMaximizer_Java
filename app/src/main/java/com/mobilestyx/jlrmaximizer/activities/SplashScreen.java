@@ -1,4 +1,4 @@
-package com.mobilestyx.jlrmaximizer;
+package com.mobilestyx.jlrmaximizer.activities;
 
 import static com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE;
 import static com.mobilestyx.jlrmaximizer.utils.AppUtils.showAlertDialog;
@@ -26,6 +26,8 @@ import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.OnSuccessListener;
 import com.google.android.play.core.tasks.Task;
+import com.mobilestyx.jlrmaximizer.BuildConfig;
+import com.mobilestyx.jlrmaximizer.R;
 import com.mobilestyx.jlrmaximizer.utils.AppUtils;
 import com.scottyab.rootbeer.RootBeer;
 

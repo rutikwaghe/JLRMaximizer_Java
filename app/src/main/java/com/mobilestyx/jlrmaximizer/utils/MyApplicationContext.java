@@ -1,4 +1,4 @@
-package com.mobilestyx.jlrmaximizer;
+package com.mobilestyx.jlrmaximizer.utils;
 
 import android.app.Activity;
 import android.app.Application;

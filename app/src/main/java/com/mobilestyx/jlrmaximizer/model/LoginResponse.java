@@ -3,16 +3,17 @@ package com.mobilestyx.jlrmaximizer.model;
 public class LoginResponse {
 
 
-    private int user_id;
+    private int userid;
     private String email;
     private String username;
+    private String msg;
 
     public int getUser_id() {
-        return user_id;
+        return userid;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUser_id(int userid) {
+        this.userid = userid;
     }
 
     public String getEmail() {
@@ -30,4 +31,6 @@ public class LoginResponse {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public String getMsg() { return msg; }
 }

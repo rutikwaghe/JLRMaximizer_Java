@@ -1,18 +1,21 @@
 package com.mobilestyx.jlrmaximizer.remote;
 
-import com.mobilestyx.jlrmaximizer.model.LoginRequest;
-import com.mobilestyx.jlrmaximizer.model.LoginResponse;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public interface UserService {
+    @FormUrlEncoded
+    @POST("login/validate_login_webservice")
+    Call<JsonObject> userLogin(@Field("userid") String userid, @Field("password") String password);
 
-    @Headers({"Content-Type: application/json","Cache-Control:no-cache"})
-    @POST("validate_login_webservice/")
-    Call<LoginResponse> userLogin(@Body LoginRequest loginRequest);
-
-
+//    @GET("app/?name=JLRMax")
+//    Call<JsonObject> splashVersion();
 }

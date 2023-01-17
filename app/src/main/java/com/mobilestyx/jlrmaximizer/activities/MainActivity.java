@@ -1,4 +1,7 @@
-package com.mobilestyx.jlrmaximizer;
+package com.mobilestyx.jlrmaximizer.activities;
+
+import static com.mobilestyx.jlrmaximizer.utils.PermissionActivity.PERMISSION_REQUEST_CODE;
+import static com.mobilestyx.jlrmaximizer.utils.PermissionsChecker.REQUIRED_PERMISSION;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -26,8 +29,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -47,17 +52,17 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.conn.ClientConnectionManager;
-import org.apache.http.conn.scheme.PlainSocketFactory;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
-import org.apache.http.params.BasicHttpParams;
+//import org.apache.http.HttpResponse;
+//import org.apache.http.client.methods.HttpGet;
+//import org.apache.http.conn.ClientConnectionManager;
+//import org.apache.http.conn.scheme.PlainSocketFactory;
+//import org.apache.http.conn.scheme.Scheme;
+//import org.apache.http.conn.scheme.SchemeRegistry;
+//import org.apache.http.conn.ssl.SSLSocketFactory;
+//import org.apache.http.cookie.Cookie;
+//import org.apache.http.impl.client.DefaultHttpClient;
+//import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+//import org.apache.http.params.BasicHttpParams;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -66,10 +71,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.security.KeyManagementException;
@@ -86,10 +89,16 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 
-import static com.mobilestyx.jlrmaximizer.PermissionsActivity.PERMISSION_REQUEST_CODE;
-import static com.mobilestyx.jlrmaximizer.PermissionsChecker.REQUIRED_PERMISSION;
 
-//import android.support.v4.print.PrintHelper;
+import com.mobilestyx.jlrmaximizer.R;
+import com.mobilestyx.jlrmaximizer.utils.AppUtils;
+import com.mobilestyx.jlrmaximizer.utils.CapturePhotoUtils;
+import com.mobilestyx.jlrmaximizer.utils.GlobalVariable;
+import com.mobilestyx.jlrmaximizer.utils.PermissionActivity;
+import com.mobilestyx.jlrmaximizer.utils.PermissionsChecker;
+import com.mobilestyx.jlrmaximizer.utils.PrintHelper;
+
+import okhttp3.Cookie;
 
 public class MainActivity extends Activity {
 
@@ -115,7 +124,7 @@ public class MainActivity extends Activity {
     BufferedReader in = null;
     ProgressDialog pDialog, pDialog1;
     KeyStore keyStore = null;
-    private String fileName = "", fileNameCSV="";
+    private String fileName = "", fileNameCSV = "";
     private static final String TAG = "JLRMaximizer";
 
     ScrollView scrollview2;
@@ -141,11 +150,8 @@ public class MainActivity extends Activity {
     public void proceedFurther() {
 
         webView = (WebView) findViewById(R.id.webView1);
-        //ll_main = (LinearLayout) findViewById(R.id.ll_main);
-        // main_ac_relativelayout = (RelativeLayout) findViewById(R.id.main_ac_relativelayout);
         homeBtn = (Button) findViewById(R.id.button1);
         printBtn = (Button) findViewById(R.id.button2);
-        //   btn_screenshot = (Button) findViewById(R.id.btn_screenshot);
         scrollview2 = (ScrollView) findViewById(R.id.scrollview2);
 
         homeBtn.setVisibility(View.GONE);
@@ -161,12 +167,9 @@ public class MainActivity extends Activity {
         webView.getSettings().setUseWideViewPort(true);
         webView.getSettings().setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
         webView.getSettings().setSaveFormData(true);
-        webView.getSettings() .setRenderPriority(WebSettings.RenderPriority.HIGH);
+        webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
         webView.getSettings().setAllowFileAccess(false);
         context = getApplicationContext();
-
-
-
 
         startWebView(GlobalVariable.getUrl());
         Log.e(TAG, "proceedFurther:=========================================== " + GlobalVariable.getUrl());
@@ -223,26 +226,26 @@ public class MainActivity extends Activity {
         }
     }
 
-    static DefaultHttpClient client = createClient();
-
-    static DefaultHttpClient createClient() {
-        BasicHttpParams params = new BasicHttpParams();
-        SchemeRegistry schemeRegistry = new SchemeRegistry();
-        schemeRegistry.register(new Scheme("http", PlainSocketFactory
-                .getSocketFactory(), 80));
-        final SSLSocketFactory sslSocketFactory = SSLSocketFactory
-                .getSocketFactory();
-        schemeRegistry.register(new Scheme("https", sslSocketFactory, 443));
-        ClientConnectionManager cm = new ThreadSafeClientConnManager(params,
-                schemeRegistry);
-        DefaultHttpClient httpclient = new DefaultHttpClient(cm, params);
-        httpclient.getCookieStore().getCookies();
-        return httpclient;
-    }
-
-    public static DefaultHttpClient getClient() {
-        return client;
-    }
+//    static DefaultHttpClient client = createClient();
+//
+//    static DefaultHttpClient createClient() {
+//        BasicHttpParams params = new BasicHttpParams();
+//        SchemeRegistry schemeRegistry = new SchemeRegistry();
+//        schemeRegistry.register(new Scheme("http", PlainSocketFactory
+//                .getSocketFactory(), 80));
+//        final SSLSocketFactory sslSocketFactory = SSLSocketFactory
+//                .getSocketFactory();
+//        schemeRegistry.register(new Scheme("https", sslSocketFactory, 443));
+//        ClientConnectionManager cm = new ThreadSafeClientConnManager(params,
+//                schemeRegistry);
+//        DefaultHttpClient httpclient = new DefaultHttpClient(cm, params);
+//        httpclient.getCookieStore().getCookies();
+//        return httpclient;
+//    }
+//
+//    public static DefaultHttpClient getClient() {
+//        return client;
+//    }
 
     private void startWebView(String url) {
 
@@ -257,57 +260,34 @@ public class MainActivity extends Activity {
                     redirect = true;
                 }
 
-                if (!WebPrintActivity
-                        .checkInternetConnection(MainActivity.this)) {
-
-                    // Toast.makeText(LoginActivity.this,
-                    // "Please check your internet connection and try again !",
-                    // Toast.LENGTH_SHORT).show();
+                if (!AppUtils.isInternetOn(MainActivity.this)) {
                     showAlertDialog(MainActivity.this, "No Internet Connection", "Please check your internet connection & try again !", false);
-
                 } else {
-
                     if (url.endsWith("?type=relogin")) {
-
-                        // showAlertDialog(MainActivity.this, "Alert!",
-                        // "Please login with your new password!", false);
-
-                        // webView.stopLoading();
-                        //		 Log.d(TAG, "MOBU5");
                         webView.loadUrl(getString(R.string.u5));
                         Intent i2 = new Intent(MainActivity.this, LoginActivity.class);
-                        // i2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                        // Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         i2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         String keyIdentifer = null;
 
                         i2.putExtra("code", "1");// adding additional data using
-                        // putExtras()
                         startActivity(i2);
                         finish();
 
                     }
 
                     if (url.contains("call")) {
-
                         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CALL_PHONE}, 11);
 
                         } else {
-
-
                             String callNumber = url.substring(url.indexOf("call") + 5, url.length());
-                            //	Log.d(TAG, "Calling = "+callNumber);
-
                             Intent intent = new Intent(Intent.ACTION_CALL);
-
                             intent.setData(Uri.parse("tel:" + callNumber));
                             startActivity(intent);
                         }
                     }
 
                     if (url.contains(getString(R.string.u6)) || url.contains(getString(R.string.u69)) || url.contains(getString(R.string.u90)) || url.contains(getString(R.string.u113))) {
-                        //		 Log.d(TAG, "INMOBU6 90");
                         GlobalVariable.setStatusBackurl(url);
 
                         printBtn.setOnClickListener(new View.OnClickListener() {
@@ -315,17 +295,9 @@ public class MainActivity extends Activity {
                             @Override
                             public void onClick(View v) {
 
-                                if (!WebPrintActivity
-                                        .checkInternetConnection(MainActivity.this)) {
-
-                                    // Toast.makeText(LoginActivity.this,
-                                    // "Please check your internet connection and try again !",
-                                    // Toast.LENGTH_SHORT).show();
+                                if (!AppUtils.isInternetOn(MainActivity.this)) {
                                     showAlertDialog(MainActivity.this, "No Internet Connection", "Please check your internet connection & try again !", false);
-
                                 } else {
-
-                                    // doPhotoPrint(webView.getUrl());
                                     doPhotoPrint(GlobalVariable.getGlobalprint());
                                 }
                             }
@@ -335,13 +307,7 @@ public class MainActivity extends Activity {
 
                             @Override
                             public void onClick(View v) {
-
-                                if (!WebPrintActivity
-                                        .checkInternetConnection(MainActivity.this)) {
-
-                                    // Toast.makeText(LoginActivity.this,
-                                    // "Please check your internet connection and try again !",
-                                    // Toast.LENGTH_SHORT).show();
+                                if (!AppUtils.isInternetOn(MainActivity.this)) {
                                     showAlertDialog(
                                             MainActivity.this,
                                             "No Internet Connection",
@@ -351,11 +317,7 @@ public class MainActivity extends Activity {
 
                                     homeBtn.setVisibility(View.GONE);
                                     printBtn.setVisibility(View.GONE);
-                                    //  btn_screenshot.setVisibility(View.GONE);
-
                                     webView.loadUrl(getString(R.string.u7));
-                                    //				 Log.d(TAG, "MOBU7");
-
                                 }
                             }
                         });
@@ -367,27 +329,18 @@ public class MainActivity extends Activity {
 
                     if (url.substring(url.length() - 4).equalsIgnoreCase(".csv")) {
 
-                        if (!WebPrintActivity.checkInternetConnection(MainActivity.this)) {
-
+                        if (!AppUtils.isInternetOn(MainActivity.this)) {
                             showAlertDialog(MainActivity.this, "No Internet Connection", "Please check your internet connection & try again !", false);
-
                         } else {
 
                             if (checker.lacksPermissions(REQUIRED_PERMISSION)) {
 
 
-                                PermissionsActivity.startActivityForResult(MainActivity.this, PERMISSION_REQUEST_CODE, REQUIRED_PERMISSION);
+                                PermissionActivity.startActivityForResult(MainActivity.this, PERMISSION_REQUEST_CODE, REQUIRED_PERMISSION);
 
                             } else {
-
-//                                if (!url.startsWith("https://drive.google.com")) {
-//
-//                                    url = "http://drive.google.com/viewerng/viewer?embedded=true&url=" + url;
-//
-//                                }
-
                                 fileNameCSV = url.substring(url.lastIndexOf('/') + 1, url.length());
-                                Log.e(TAG,"CSV Name: "+ fileNameCSV);
+                                Log.e(TAG, "CSV Name: " + fileNameCSV);
 
                                 try {
                                     fileNameCSV = URLDecoder.decode(fileNameCSV, "UTF-8");
@@ -424,14 +377,12 @@ public class MainActivity extends Activity {
                                 DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
                                 dm.enqueue(request);
                             }
-                            //new DownloadTask(MainActivity.this, url);
                         }
                     }
 
                     if (url.substring(url.length() - 4).equalsIgnoreCase(".pdf")) {
 
-                        if (!WebPrintActivity.checkInternetConnection(MainActivity.this)) {
-
+                        if (!AppUtils.isInternetOn(MainActivity.this)) {
                             showAlertDialog(MainActivity.this, "No Internet Connection", "Please check your internet connection & try again !", false);
 
                         } else {
@@ -439,18 +390,12 @@ public class MainActivity extends Activity {
                             if (checker.lacksPermissions(REQUIRED_PERMISSION)) {
 
 
-                                PermissionsActivity.startActivityForResult(MainActivity.this, PERMISSION_REQUEST_CODE, REQUIRED_PERMISSION);
+                                PermissionActivity.startActivityForResult(MainActivity.this, PERMISSION_REQUEST_CODE, REQUIRED_PERMISSION);
 
                             } else {
 
-//                                if (!url.startsWith("https://drive.google.com")) {
-//
-//                                    url = "http://drive.google.com/viewerng/viewer?embedded=true&url=" + url;
-//
-//                                }
-
                                 fileName = url.substring(url.lastIndexOf('/') + 1, url.length());
-                                Log.e(TAG,"PDF Name: "+ fileName);
+                                Log.e(TAG, "PDF Name: " + fileName);
 
                                 try {
                                     fileName = URLDecoder.decode(fileName, "UTF-8");
@@ -487,7 +432,6 @@ public class MainActivity extends Activity {
                                 DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
                                 dm.enqueue(request);
                             }
-                            //new DownloadTask(MainActivity.this, url);
                         }
                     }
 
@@ -509,20 +453,16 @@ public class MainActivity extends Activity {
                     }
 
                     if (url.contains(getString(R.string.u30))) {
-
-                        // btn_screenshot.setVisibility(View.GONE);
                         printBtn.setVisibility(View.GONE);
                         homeBtn.setVisibility(View.GONE);
 
                     } else if (url.contains(getString(R.string.u33))) {
 
-                        // btn_screenshot.setVisibility(View.GONE);
                         printBtn.setVisibility(View.GONE);
                         homeBtn.setVisibility(View.GONE);
 
                     } else if (url.contains(getString(R.string.u7))) {
 
-                        //  btn_screenshot.setVisibility(View.GONE);
                         printBtn.setVisibility(View.GONE);
                         homeBtn.setVisibility(View.GONE);
 
@@ -535,7 +475,7 @@ public class MainActivity extends Activity {
 
                             if (checker.lacksPermissions(REQUIRED_PERMISSION)) {
 
-                                PermissionsActivity.startActivityForResult(MainActivity.this, PERMISSION_REQUEST_CODE, REQUIRED_PERMISSION);
+                                PermissionActivity.startActivityForResult(MainActivity.this, PERMISSION_REQUEST_CODE, REQUIRED_PERMISSION);
 
                             } else {
 
@@ -558,103 +498,38 @@ public class MainActivity extends Activity {
                                     //MediaStore.Images.Media.insertImage(getContentResolver(), bm, "JLRMaximizer", "ScreenShot");
                                     CapturePhotoUtils.insertImage(getContentResolver(), bm, "JLRMaximizer", "ScreenShot");
                                     Toast.makeText(MainActivity.this, "Screenshot successfully saved into gallery", Toast.LENGTH_SHORT).show();
-                                    /*File direct = new File(Environment.getExternalStorageDirectory() + "/JLRMaximizerSreenShot");
-                                    if (!direct.exists()) {
-
-                                        File imageDirectory = new File(Environment.getExternalStorageDirectory().getPath() + "/JLRMaximizerSreenShot");
-                                        Log.e(TAG, "File Path = " + Environment.getExternalStorageDirectory().getPath());
-
-                                        imageDirectory.mkdirs();
-                                        imageDirectory.setReadable(true);
-
-                                        imageDirectory.setWritable(true);
-                                        imageDirectory.setExecutable(true);
-                                    }
-                                    Date date = new Date();
-                                    SimpleDateFormat dateformat = new SimpleDateFormat("ddMMyyHHmmss");
-
-                                    String filename = "ScreenShot" + dateformat.format(date) + ".png";
-                                    File file = new File(new File(Environment.getExternalStorageDirectory().getPath() + "/JLRMaximizerSreenShot"), filename);
-
-                                    FileOutputStream fos;
-                                    try {
-                                        fos = new FileOutputStream(file);
-                                        bm.compress(Bitmap.CompressFormat.PNG, 100, fos);
-                                        addImageToGallery(bitMapToString(bm), getApplicationContext());
-                                        Toast.makeText(MainActivity.this, "Screenshot saved successfully into gallery", Toast.LENGTH_SHORT).show();
-                                        fos.flush();
-                                        fos.close();
-                                        bm.recycle();
-                                    } catch (FileNotFoundException e) {
-                                        Log.e("FileNotFoundException", e.getMessage(), e);
-                                    } catch (IOException e) {
-                                        Log.e("IOException", e.getMessage(), e);
-                                    }*/
-                                   /*String path = Environment.getExternalStorageDirectory().toString();
-
-                                    Log.e(TAG, "path = " + path);
-                                    OutputStream fOut = null;
-                                    File file = new File(path, "/JLRMaximizer_Image.png");
-                                    try {
-                                        fOut = new FileOutputStream(file);
-                                        bm.compress(Bitmap.CompressFormat.PNG, 50, fOut);
-                                        fOut.flush();
-                                        fOut.close();
-                                        bm.recycle();
-                                    } catch (FileNotFoundException e1) {
-
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }*/
 
 
                                 }
                             }
-                            /* Toast.makeText(MainActivity.this, "ScreenShot button is clicked", Toast.LENGTH_SHORT).show();*/
-                            /*This code is added by Deepak Tiwari to take screenshot*/
-
-                                /* Bitmap bitmap = loadBitmapFromView(ll_main, ll_main.getWidth(), ll_main.getHeight());
-                                saveBitmap(bitmap);*/
-
                         }
                     } else if (url.contains(getString(R.string.u30))) {
 
-                        // btn_screenshot.setVisibility(View.GONE);
                         printBtn.setVisibility(View.GONE);
                         homeBtn.setVisibility(View.GONE);
 
                     } else if (url.contains(getString(R.string.u33))) {
 
-                        //btn_screenshot.setVisibility(View.GONE);
                         printBtn.setVisibility(View.GONE);
                         homeBtn.setVisibility(View.GONE);
                     }
-                    /*Following Lines of code are Added by Deepak Tiwari*/
 
                     if (url.contains(getString(R.string.u8))) {
-                        //			 Log.d(TAG, "INMOBU8");
-
                         String urlsub = url;
                         String urlsub2 = url;
                         String surl = urlsub.substring(urlsub.indexOf("download") + 8, urlsub.length());
-                        //			Log.e(TAG, "surl = "+surl);
                         GlobalVariable.setUrl(surl);
                         url = getString(R.string.u9) + surl;
-                        //			Log.e(TAG, "url = "+url);
-                        //			 Log.d(TAG, "MOBU9");
 
                         // Capture Rid for pdf
                         String pdfurl = urlsub2.substring(urlsub2.indexOf("download") + 13, urlsub2.indexOf("&"));
 
-                        //			Log.e(TAG, "pdfurl = "+pdfurl);
-
                         String printurl = getString(R.string.u10) + pdfurl
                                 + ".jpg";
-                        //			Log.d(TAG, "MOBU10");
-                        GlobalVariable.setGlobalprint(printurl);
-                        //			Log.e(TAG, "printurl = "+printurl);
-                        statback = true;
 
+                        GlobalVariable.setGlobalprint(printurl);
+
+                        statback = true;
                         webView.getSettings().setBuiltInZoomControls(true);
                         webView.getSettings().setSupportZoom(true);
                         webView.getSettings().setDisplayZoomControls(true);
@@ -664,8 +539,6 @@ public class MainActivity extends Activity {
                     }
 
                     if (url.contains(getString(R.string.u97))) {
-                        //		 Log.d(TAG, "INMOBU97");
-
                         String urlsub = url;
                         String urlsub2 = url;
                         String surl = urlsub.substring(urlsub.indexOf("download") + 8, urlsub.length());
@@ -712,15 +585,9 @@ public class MainActivity extends Activity {
 
                         GlobalVariable.setUrl(surl);
                         url = getString(R.string.u121) + surl;
-                        //		Log.e(TAG, "url = "+url);
-                        //		 Log.d(TAG, "MOBU98");
-
-                        // Capture Rid for pdf
                         String pdfurl = urlsub2.substring(
                                 urlsub2.indexOf("download") + 13,
                                 urlsub2.indexOf("&"));
-
-                        //		Log.e(TAG, "pdfurl = "+pdfurl);
 
                         String printurl = getString(R.string.u122) + pdfurl
                                 + ".jpg";
@@ -745,9 +612,6 @@ public class MainActivity extends Activity {
                         webView.getSettings().setDisplayZoomControls(true);
                         homeBtn.setVisibility(View.VISIBLE);
                         printBtn.setVisibility(View.VISIBLE);
-                        // btn_screenshot.setVisibility(View.GONE);
-                        // view.loadUrl(url);
-                        // loadingFinished = false;
 
                     }
 
@@ -822,28 +686,13 @@ public class MainActivity extends Activity {
                     /*This lines of code is added by Deepak Tiwari*/
                     else if (url.contains(getString(R.string.u79))) {
 
-                        /*This lines of code is added by Deepak Tiwari*/
-                        // main_ac_relativelayout.setBackgroundColor(Color.WHITE);
-                        // btn_screenshot.setVisibility(View.GONE);
-                        /*This lines of code is added by Deepak Tiwari*/
+                    } else if (url.contains(getString(R.string.u23))) {
 
-                    }/*This lines of code is added by Deepak Tiwari*/ else if (url.contains(getString(R.string.u23))) {
-
-                        //			 Log.d(TAG, "INMOBU23");
                         GlobalVariable.setOnlybackurl(url);
 
                     } else if (url.contains(getString(R.string.u7))) {
 
-                        /*This lines of code is added by Deepak Tiwari*/
-                        // main_ac_relativelayout.setBackgroundColor(Color.BLACK);
-                        //btn_screenshot.setVisibility(View.GONE);
-                        /*This lines of code is added by Deepak Tiwari*/
-
                     } else if (url.contains(getString(R.string.u40))) {
-
-                        /*This lines of code is added by Deepak Tiwari*/
-                        //btn_screenshot.setVisibility(View.GONE);
-                        /*This lines of code is added by Deepak Tiwari*/
 
                     } else if (url.contains(getString(R.string.u24))) {
                         //			 Log.d(TAG, "INMOBU24");
@@ -865,11 +714,6 @@ public class MainActivity extends Activity {
                         GlobalVariable.setOnlybackurl(url);
                     } else if (url.contains(getString(R.string.u68))) {
 
-                        /*This lines of code is added by Deepak Tiwari*/
-                        //btn_screenshot.setVisibility(View.GONE);
-                        /*This lines of code is added by Deepak Tiwari*/
-
-                        //			 Log.d(TAG, "INMOBU28");
                         GlobalVariable.setOnlybackurl(url);
                     } else if (url.contains(getString(R.string.u39))) {
 
@@ -967,81 +811,73 @@ public class MainActivity extends Activity {
 
             }
 
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-
-                // Log.d(TAG, "onPageStarted = "+url);
-
-                if (id == 0) {
-                    id = 1;
-
-                    DefaultHttpClient httpclient = LoginActivity.getClient();
-                    Cookie sessionInfo;
-                    List<Cookie> cookies = httpclient.getCookieStore()
-                            .getCookies();
-                    if (!cookies.isEmpty()) {
-                        CookieSyncManager.createInstance(MainActivity.this);
-                        CookieManager cookieManager = CookieManager
-                                .getInstance();
-
-                        for (Cookie cookie : cookies) {
-                            sessionInfo = cookie;
-                            String cookieString = sessionInfo.getName() + "="
-                                    + sessionInfo.getValue() + "; domain="
-                                    + sessionInfo.getDomain();
-
-                            // Log.d(TAG, "Beta, cookie string is " +
-                            // cookieString);
-
-                            cookieManager.setCookie(getString(R.string.u29), cookieString);
-                            // Log.d(TAG, "MOBU29");
-                            CookieSyncManager.getInstance().sync();
-                        }
-                    } else {
-
-                    }
-
-                }
-
-                if (url.contains(getString(R.string.u30))
-                        || url.equals(getString(R.string.u31))
-                        || url.endsWith("?type=relogin")
-                        || url.equals(getString(R.string.u32))) {
-
-                    //		 Log.d(TAG, "INMOB3032");
-
-                } else {
-
-                    if (progressDialog == null
-                            || progressDialog.isShowing() == false) {
-
-                        /** Old Loader */
-                        // progressDialog = new
-                        // ProgressDialog(MainActivity.this);
-                        // progressDialog.setCancelable(false);
-                        // progressDialog.setCanceledOnTouchOutside(false);
-                        // progressDialog.setMessage("Loading...");
-                        // progressDialog.show();
-
-                        // /**new Loader*/
-                        progressDialog = new ProgressDialog(MainActivity.this,
-                                R.style.full_screen_dialog) {
-                            @Override
-                            protected void onCreate(Bundle savedInstanceState) {
-                                super.onCreate(savedInstanceState);
-                                setContentView(R.layout.fill_dialog);
-                                getWindow().setLayout(LayoutParams.FILL_PARENT,
-                                        LayoutParams.FILL_PARENT);
-                            }
-                        };
-                        progressDialog.getWindow().setBackgroundDrawableResource(R.drawable.splash);
-                        progressDialog.setCancelable(false);
-                        progressDialog.show();
-                    }
-
-                }
-
-            }
+//            @Override
+//            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+//
+//                // Log.d(TAG, "onPageStarted = "+url);
+//
+//                if (id == 0) {
+//                    id = 1;
+//
+//                    DefaultHttpClient httpclient = LoginActivity.getClient();
+//                    Cookie sessionInfo;
+//                    List<Cookie> cookies = httpclient.getCookieStore()
+//                            .getCookies();
+//                    if (!cookies.isEmpty()) {
+//                        CookieSyncManager.createInstance(MainActivity.this);
+//                        CookieManager cookieManager = CookieManager
+//                                .getInstance();
+//
+//                        for (Cookie cookie : cookies) {
+//                            sessionInfo = cookie;
+//                            String cookieString = sessionInfo.getName() + "="
+//                                    + sessionInfo.getValue() + "; domain="
+//                                    + sessionInfo.getDomain();
+//
+//                            // Log.d(TAG, "Beta, cookie string is " +
+//                            // cookieString);
+//
+//                            cookieManager.setCookie(getString(R.string.u29), cookieString);
+//                            // Log.d(TAG, "MOBU29");
+//                            CookieSyncManager.getInstance().sync();
+//                        }
+//                    } else {
+//
+//                    }
+//
+//                }
+//
+//                if (url.contains(getString(R.string.u30))
+//                        || url.equals(getString(R.string.u31))
+//                        || url.endsWith("?type=relogin")
+//                        || url.equals(getString(R.string.u32))) {
+//
+//                    //		 Log.d(TAG, "INMOB3032");
+//
+//                } else {
+//
+//                    if (progressDialog == null
+//                            || progressDialog.isShowing() == false) {
+//
+//
+//                        progressDialog = new ProgressDialog(MainActivity.this,
+//                                R.style.full_screen_dialog) {
+//                            @Override
+//                            protected void onCreate(Bundle savedInstanceState) {
+//                                super.onCreate(savedInstanceState);
+//                                setContentView(R.layout.fill_dialog);
+//                                getWindow().setLayout(LayoutParams.FILL_PARENT,
+//                                        LayoutParams.FILL_PARENT);
+//                            }
+//                        };
+//                        progressDialog.getWindow().setBackgroundDrawableResource(R.drawable.splash);
+//                        progressDialog.setCancelable(false);
+//                        progressDialog.show();
+//                    }
+//
+//                }
+//
+//            }
         });
 
         webView.setWebChromeClient(new WebChromeClient() {
@@ -1050,13 +886,6 @@ public class MainActivity extends Activity {
 
                 if (progress >= 100) {
 
-                    // if (progressDialog != null || progressDialog.isShowing())
-                    // {
-                    // System.out.println("onProgressChangedDialog DISMISSED!");
-                    // progressDialog.dismiss();
-                    //
-                    // }
-
                 }
 
             }
@@ -1064,26 +893,7 @@ public class MainActivity extends Activity {
         });
 
         webView.loadUrl(url);
-        // Comment Below After Testing!
-        // if (url.endsWith("?type=relogin")){
-        //
-        // System.out.println("in RELOGIN shouldoverride -----------------------------------");
-        //
-        // // showAlertDialog(MainActivity.this, "Alert!",
-        // // "Please login with your new password!", false);
-        //
-        // webView.stopLoading();
-        // Intent i2 = new Intent(MainActivity.this, LoginActivity.class);
-        // //i2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-        // Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        // i2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        // String keyIdentifer = null;
-        // System.out.println("PASSED CODE 1");
-        // i2.putExtra("code", "1");//adding additional data using putExtras()
-        // startActivity(i2);
-        // finish();
-        //
-        // }
+
 
     }
 
@@ -1279,11 +1089,7 @@ public class MainActivity extends Activity {
     public void onBackPressed() {
 
 
-        if (!WebPrintActivity.checkInternetConnection(MainActivity.this)) {
-
-            // Toast.makeText(LoginActivity.this,
-            // "Please check your internet connection and try again !",
-            // Toast.LENGTH_SHORT).show();
+        if (!AppUtils.isInternetOn(MainActivity.this)) {
             showAlertDialog(MainActivity.this, "No Internet Connection", "Please check your internet connection & try again !", false);
 
         } else {
@@ -1652,21 +1458,7 @@ public class MainActivity extends Activity {
 
     }
 
-    /** Not For KitKat */
-    /*
-     * public static void trimCache(Context context) { try { File dir =
-     * context.getCacheDir(); if (dir != null && dir.isDirectory()) {
-     * deleteDir(dir); } } catch (Exception e) { // TODO: handle exception } }
-     *
-     * public static boolean deleteDir(File dir) { if (dir != null &&
-     * dir.isDirectory()) { String[] children = dir.list(); for (int i = 0; i <
-     * children.length; i++) { boolean success = deleteDir(new File(dir,
-     * children[i])); if (!success) { return false; } } }
-     */
 
-    /**
-     * KitKat
-     */
     void trimCache(Context context) {
 
         try {
@@ -1716,14 +1508,6 @@ public class MainActivity extends Activity {
                 throws CertificateException {
         }
 
-        public boolean isClientTrusted(X509Certificate[] chain) {
-            return (true);
-        }
-
-        public boolean isServerTrusted(X509Certificate[] chain) {
-            return (true);
-        }
-
         public X509Certificate[] getAcceptedIssuers() {
             return (_AcceptedIssuers);
         }
@@ -1756,67 +1540,6 @@ public class MainActivity extends Activity {
                 .getSocketFactory());
     }
 
-    /*Following Code is Added by Deepak tiwari*/
-
-    public void saveBitmap(Bitmap bitmap) {
-
-
-        File direct = new File(Environment.getExternalStorageDirectory() + "/JLRMaximizerSreenShot");
-
-        if (!direct.exists()) {
-
-            File imageDirectory = new File(Environment.getExternalStorageDirectory().getPath() + "/JLRMaximizerSreenShot");
-            Log.e(TAG, "File Path = " + Environment.getExternalStorageDirectory().getPath());
-
-            imageDirectory.mkdirs();
-            imageDirectory.setReadable(true);
-            imageDirectory.setWritable(true);
-            imageDirectory.setExecutable(true);
-        }
-        Date date = new Date();
-        SimpleDateFormat dateformat = new SimpleDateFormat("ddMMyyHHmmss");
-        String filename = "ScreenShot" + dateformat.format(date) + ".png";
-        File file = new File(new File(Environment.getExternalStorageDirectory().getPath() + "/JLRMaximizerSreenShot"), filename);
-        FileOutputStream fos;
-        try {
-            fos = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-            fos.flush();
-            fos.close();
-            Toast.makeText(getApplicationContext(), "Screenshot saved successfully", Toast.LENGTH_SHORT).show();
-            Log.e("JLRMaximizerSreenShot", "Statement Page");
-        } catch (FileNotFoundException e) {
-            Log.e("GREC", e.getMessage(), e);
-        } catch (IOException e) {
-            Log.e("GREC", e.getMessage(), e);
-        }
-    }
-
-    public static Bitmap loadBitmapFromView(View v, int width, int height) {
-        Bitmap b = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(b);
-        v.draw(c);
-        return b;
-    }
-
-    public static void addImageToGallery(final String filePath, final Context context) {
-
-        ContentValues values = new ContentValues();
-
-        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
-        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-        values.put(MediaStore.MediaColumns.DATA, filePath);
-        context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-
-    }
-
-    public String bitMapToString(Bitmap bitmap) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] b = baos.toByteArray();
-        String temp = Base64.encodeToString(b, Base64.DEFAULT);
-        return temp;
-    }
 
     public void openUrlInBrowser(String url) {
 

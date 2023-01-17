@@ -2,15 +2,15 @@ package com.mobilestyx.jlrmaximizer.model;
 
 public class LoginRequest {
 
-    private String username;
+    private String userid;
     private String password;
 
     public String getUsername() {
-        return username;
+        return userid;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.userid = username;
     }
 
     public String getPassword() {

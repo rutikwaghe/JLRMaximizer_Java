@@ -28,7 +28,7 @@ public class ApiClient {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(String.valueOf(R.string.baseUrl))
+                .baseUrl("https://www.jlrmaximizer.in/")
                 .client(okHttpClient)
                 .build();
 
@@ -39,7 +39,7 @@ public class ApiClient {
 //        // To get latest certificate https://www.ssllabs.com/ssltest/analyze.html?d=www.iciciprulife.com
 //        // To get latest certificate https://www.ssllabs.com/ssltest/analyze.html?d=api.iciciprulife.com
 //        return new CertificatePinner.Builder()
-//                .add("https://www.jlrmaximizer.in", "sha256/nkg9VQd+wjcCEJdZ+84DxZz9OZ97qGpyrB7v4qMqS8g=")
+//                .add("https://www.jlrmaximizer.in/", "sha256/nkg9VQd+wjcCEJdZ+84DxZz9OZ97qGpyrB7v4qMqS8g=")
 //                .build();
 //    }
 

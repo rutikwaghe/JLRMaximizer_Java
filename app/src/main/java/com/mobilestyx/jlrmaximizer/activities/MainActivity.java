@@ -107,23 +107,14 @@ public class MainActivity extends Activity {
     boolean loadingFinished = true;
     boolean redirect = false;
     View activity;
-    // Button btnPrint;
-    public static float width;
-    public static float height;
     Context context;
     RelativeLayout.LayoutParams bparams, b2params;
     Button printBtn, homeBtn, btn_screenshot;
     boolean statback = true;
-    boolean newVehiclback = true;
-    String verME = null;
-    String result = null;
-    int latestver = 0;
+
     PackageInfo pinfo = null;
-    List<Cookie> sessionCookie;
-    int id = 0;
-    BufferedReader in = null;
     ProgressDialog pDialog, pDialog1;
-    KeyStore keyStore = null;
+
     private String fileName = "", fileNameCSV = "";
     private static final String TAG = "JLRMaximizer";
 
@@ -145,7 +136,7 @@ public class MainActivity extends Activity {
         proceedFurther();
     }
 
-    @SuppressWarnings("deprecation")
+//    @SuppressWarnings("deprecation")
     @SuppressLint({"NewApi", "SetJavaScriptEnabled"})
     public void proceedFurther() {
 

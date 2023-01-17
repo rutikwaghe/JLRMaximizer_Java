@@ -11,6 +11,11 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <permission
+        android:name="com.mobilestyx.JLRMaximizer"
+        android:label="my_permission"
+        android:protectionLevel="normal" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -48,6 +53,9 @@
             android:hardwareAccelerated="true"
             android:label="@string/app_name"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".utils.PermissionActivity"
+            android:theme="@style/Theme.AppCompat"/>
 
     </application>
 

@@ -2,6 +2,7 @@ package com.mobilestyx.jlrmaximizer.activities;
 
 import static com.mobilestyx.jlrmaximizer.utils.AppUtils.showAlertDialog;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
@@ -118,10 +120,13 @@ public class LoginActivity extends AppCompatActivity {
         loginResponseCall.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.d("TAG", "onSuccessLogin !" + response.body().toString());
                 msgResponse = response.body().getAsJsonObject().get("msg").toString();
+//                if (response.isSuccessful()) {
+//                    msgResponse = response.body().getAsJsonObject().get("msg").toString();
+//                }
+                if (msgResponse.contains("success")) {
+                    Log.d("TAG", "msgResponsemsgResponse !" + response.body().getAsJsonObject().get("msg").toString());
 
-                if (msgResponse.equals("success")) {
                     linkResponse = response.body().getAsJsonObject().get("link").toString();
                     tokenResponse = response.body().getAsJsonObject().get("token").toString();
                     mergedLinkWv = getString(R.string.ulogin) + tokenResponse;
@@ -152,6 +157,19 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("TAG", "onSuccessLoginWrong !" + response.body().toString());
                     showAlertDialog(LoginActivity.this, "Alert!",
                             "Please enter a valid User ID & Password !!", false);
+
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+//                    builder.setMessage("Do you want to exit ?");
+//                    builder.setTitle("Alert !");
+//                    builder.setCancelable(false);
+//                    builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
+//                        finish();
+//                    });
+//                    builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
+//                        dialog.cancel();
+//                    });
+//                    AlertDialog alertDialog = builder.create();
+//                    alertDialog.show();
 
                 } else if (msgResponse.contains("User exceeded max login attempt.")) {
                     Log.d("TAG", "onSuccessLoginexceeded !" + response.body().toString());

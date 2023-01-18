@@ -1,4 +1,4 @@
-package com.mobilestyx.jlrmaximizer.utils;
+package com.mobilestyx.JLRMaximizer.utils;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -12,8 +12,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.mobilestyx.jlrmaximizer.R;
+import com.mobilestyx.JLRMaximizer.R;
 
+import io.michaelrocks.paranoid.Obfuscate;
+
+@Obfuscate
 public class PermissionActivity extends AppCompatActivity {
 
     public static final int PERMISSIONS_GRANTED = 0;

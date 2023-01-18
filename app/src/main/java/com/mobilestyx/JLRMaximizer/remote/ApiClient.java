@@ -1,15 +1,16 @@
-package com.mobilestyx.jlrmaximizer.remote;
+package com.mobilestyx.JLRMaximizer.remote;
 
-import com.mobilestyx.jlrmaximizer.R;
+import com.mobilestyx.JLRMaximizer.R;
 
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.CertificatePinner;
+import io.michaelrocks.paranoid.Obfuscate;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+@Obfuscate
 public class ApiClient {
 
     private static Retrofit getRetrofit() {

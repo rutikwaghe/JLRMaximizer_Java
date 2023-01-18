@@ -1,13 +1,17 @@
-package com.mobilestyx.jlrmaximizer.utils;
+package com.mobilestyx.JLRMaximizer.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.net.Uri;
 import java.io.FileNotFoundException;
+
+import io.michaelrocks.paranoid.Obfuscate;
+
 /**
  * Helper for printing bitmaps.
  */
+@Obfuscate
 public final class PrintHelper {
     /**
      * image will be scaled but leave white space

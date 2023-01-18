@@ -1,4 +1,4 @@
-package com.mobilestyx.jlrmaximizer;
+package com.mobilestyx.JLRMaximizer;
 
 import org.junit.Test;
 

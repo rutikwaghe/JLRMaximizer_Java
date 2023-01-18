@@ -1,10 +1,13 @@
-package com.mobilestyx.jlrmaximizer.utils;
+package com.mobilestyx.JLRMaximizer.utils;
 
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import androidx.core.content.ContextCompat;
 
+import io.michaelrocks.paranoid.Obfuscate;
+
+@Obfuscate
 public class PermissionsChecker {
 
     /**

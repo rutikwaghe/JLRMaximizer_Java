@@ -1,4 +1,4 @@
-package com.mobilestyx.jlrmaximizer.utils;
+package com.mobilestyx.JLRMaximizer.utils;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -12,6 +12,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import io.michaelrocks.paranoid.Obfuscate;
+
+
+@Obfuscate
 public class CapturePhotoUtils {
 
     public static final String insertImage(ContentResolver cr,

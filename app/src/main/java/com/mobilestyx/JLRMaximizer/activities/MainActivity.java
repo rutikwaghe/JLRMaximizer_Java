@@ -1,7 +1,7 @@
-package com.mobilestyx.jlrmaximizer.activities;
+package com.mobilestyx.JLRMaximizer.activities;
 
-import static com.mobilestyx.jlrmaximizer.utils.PermissionActivity.PERMISSION_REQUEST_CODE;
-import static com.mobilestyx.jlrmaximizer.utils.PermissionsChecker.REQUIRED_PERMISSION;
+import static com.mobilestyx.JLRMaximizer.utils.PermissionActivity.PERMISSION_REQUEST_CODE;
+import static com.mobilestyx.JLRMaximizer.utils.PermissionsChecker.REQUIRED_PERMISSION;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -9,10 +9,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
@@ -23,24 +21,18 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.StrictMode;
-import android.provider.MediaStore;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
-import android.webkit.JsPromptResult;
-import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.LayoutAlgorithm;
@@ -48,76 +40,45 @@ import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-//import org.apache.http.HttpResponse;
-//import org.apache.http.client.methods.HttpGet;
-//import org.apache.http.conn.ClientConnectionManager;
-//import org.apache.http.conn.scheme.PlainSocketFactory;
-//import org.apache.http.conn.scheme.Scheme;
-//import org.apache.http.conn.scheme.SchemeRegistry;
-//import org.apache.http.conn.ssl.SSLSocketFactory;
-//import org.apache.http.cookie.Cookie;
-//import org.apache.http.impl.client.DefaultHttpClient;
-//import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
-//import org.apache.http.params.BasicHttpParams;
-
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.security.KeyManagementException;
-import java.security.KeyStore;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 
+import com.mobilestyx.JLRMaximizer.R;
+import com.mobilestyx.JLRMaximizer.utils.AppUtils;
+import com.mobilestyx.JLRMaximizer.utils.CapturePhotoUtils;
+import com.mobilestyx.JLRMaximizer.utils.GlobalVariable;
+import com.mobilestyx.JLRMaximizer.utils.PermissionActivity;
+import com.mobilestyx.JLRMaximizer.utils.PermissionsChecker;
+import com.mobilestyx.JLRMaximizer.utils.PrintHelper;
 
-import com.mobilestyx.jlrmaximizer.R;
-import com.mobilestyx.jlrmaximizer.utils.AppUtils;
-import com.mobilestyx.jlrmaximizer.utils.CapturePhotoUtils;
-import com.mobilestyx.jlrmaximizer.utils.GlobalVariable;
-import com.mobilestyx.jlrmaximizer.utils.PermissionActivity;
-import com.mobilestyx.jlrmaximizer.utils.PermissionsChecker;
-import com.mobilestyx.jlrmaximizer.utils.PrintHelper;
+import io.michaelrocks.paranoid.Obfuscate;
 
-import okhttp3.Cookie;
-
+@Obfuscate
 public class MainActivity extends Activity {
 
     private WebView webView;
-    private ProgressDialog progressDialog;
     boolean loadingFinished = true;
     boolean redirect = false;
     View activity;
     Context context;
-    RelativeLayout.LayoutParams bparams, b2params;
     Button printBtn, homeBtn, btn_screenshot;
     boolean statback = true;
-
     PackageInfo pinfo = null;
-    ProgressDialog pDialog, pDialog1;
-
+    ProgressDialog pDialog, progressDialog;
     private String fileName = "", fileNameCSV = "";
     private static final String TAG = "JLRMaximizer";
-
     ScrollView scrollview2;
     PermissionsChecker checker;
     boolean isUrlOpenInMobileBrowser = false;
@@ -129,14 +90,13 @@ public class MainActivity extends Activity {
         try {
             pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
         } catch (NameNotFoundException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
         checker = new PermissionsChecker(this);
         proceedFurther();
     }
 
-//    @SuppressWarnings("deprecation")
+    //    @SuppressWarnings("deprecation")
     @SuppressLint({"NewApi", "SetJavaScriptEnabled"})
     public void proceedFurther() {
 
@@ -149,9 +109,8 @@ public class MainActivity extends Activity {
         printBtn.setVisibility(View.GONE);
 
         activity = getWindow().getDecorView();
-        webView.getSettings().setJavaScriptEnabled(false);
-        // webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-        webView.getSettings().setPluginState(PluginState.ON);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setPluginState(PluginState.OFF);
         webView.getSettings().setUserAgentString(GlobalVariable.getUserAgent());
         webView.getSettings().setLoadWithOverviewMode(true);
         // double tap zoom below
@@ -167,76 +126,36 @@ public class MainActivity extends Activity {
     }
 
 
-    private class logout extends AsyncTask<String, Void, String> {
-        @Override
-        protected void onPreExecute() {
+    private void logoutWebview() {
+        /** New Loader */
+        pDialog = new ProgressDialog(MainActivity.this, R.style.full_screen_dialog) {
+            @Override
+            protected void onCreate(Bundle savedInstanceState) {
+                super.onCreate(savedInstanceState);
+                setContentView(R.layout.fill_dialog);
+                getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+            }
+        };
+        pDialog.getWindow().setBackgroundDrawableResource(R.drawable.splash);
+        pDialog.setCancelable(false);
+        pDialog.show();
 
-            /** New Loader */
-            pDialog = new ProgressDialog(MainActivity.this,
-                    R.style.full_screen_dialog) {
-                @Override
-                protected void onCreate(Bundle savedInstanceState) {
-                    super.onCreate(savedInstanceState);
-                    setContentView(R.layout.fill_dialog);
-                    getWindow().setLayout(LayoutParams.FILL_PARENT,
-                            LayoutParams.FILL_PARENT);
-                }
-            };
-            pDialog.getWindow().setBackgroundDrawableResource(R.drawable.splash);
-            pDialog.setCancelable(false);
-            pDialog.show();
-        }
-
-        @SuppressLint("SimpleDateFormat")
-        @Override
-        protected String doInBackground(String... params) {
-
-            return null;
-
-        }
-
-        @SuppressLint({"NewApi", "SetJavaScriptEnabled"})
-        @Override
-        protected void onPostExecute(String result) {
-            webView.clearCache(true);
-            pDialog.dismiss();
-            Intent i = new Intent(MainActivity.this, LoginActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-            String keyIdentifer = null;
-
-            i.putExtra("code", "2");
-            startActivity(i);
-            finish();
-
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-
-        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                webView.clearCache(true);
+//                WebStorage.getInstance().deleteAllData();
+                pDialog.dismiss();
+                Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                String keyIdentifer = null;
+                i.putExtra("code", "2");
+                startActivity(i);
+                finish();
+            }
+        }, 1000);
     }
 
-//    static DefaultHttpClient client = createClient();
-//
-//    static DefaultHttpClient createClient() {
-//        BasicHttpParams params = new BasicHttpParams();
-//        SchemeRegistry schemeRegistry = new SchemeRegistry();
-//        schemeRegistry.register(new Scheme("http", PlainSocketFactory
-//                .getSocketFactory(), 80));
-//        final SSLSocketFactory sslSocketFactory = SSLSocketFactory
-//                .getSocketFactory();
-//        schemeRegistry.register(new Scheme("https", sslSocketFactory, 443));
-//        ClientConnectionManager cm = new ThreadSafeClientConnManager(params,
-//                schemeRegistry);
-//        DefaultHttpClient httpclient = new DefaultHttpClient(cm, params);
-//        httpclient.getCookieStore().getCookies();
-//        return httpclient;
-//    }
-//
-//    public static DefaultHttpClient getClient() {
-//        return client;
-//    }
 
     private void startWebView(String url) {
 
@@ -650,12 +569,11 @@ public class MainActivity extends Activity {
                         }
                     }
                     if (url.contains(getString(R.string.u14))) {
-                        //		 Log.d(TAG, "INMOBU14");
-
                         webView.loadUrl(getString(R.string.u15));
-                        //		 Log.d(TAG, "MOBU15");
-                        logout LogoutTask = new logout();
-                        LogoutTask.execute();
+                        logoutWebview();
+//                        logout LogoutTask = new logout();
+//                        LogoutTask.execute();
+
 
                     } else if (url.equals(getString(R.string.u16))
                             || url.equals(getString(R.string.u17))
@@ -763,129 +681,41 @@ public class MainActivity extends Activity {
             }
 
             public void onPageFinished(final WebView view, String url) {
-
-                // Log.d(TAG, "onPageFinished = "+url);
-
                 if (progressDialog != null && progressDialog.isShowing()) {
-
                     progressDialog.dismiss();
                 }
-
                 if (!redirect) {
                     loadingFinished = true;
-
                 }
-
                 if (loadingFinished && !redirect) {
-
                 } else {
-
                     redirect = false;
                 }
-
             }
 
-            public void onReceivedError(WebView view, int errorCode,
-                                        String description, String failingUrl) {
-
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 try {
                     webView.stopLoading();
                 } catch (Exception e) {
                 }
-
                 showAlertDialog(MainActivity.this, "No Internet Connection",
                         "Please check your internet connection & try again !",
                         false);
-
                 super.onReceivedError(webView, errorCode, description,
                         failingUrl);
-
             }
 
-//            @Override
-//            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-//
-//                // Log.d(TAG, "onPageStarted = "+url);
-//
-//                if (id == 0) {
-//                    id = 1;
-//
-//                    DefaultHttpClient httpclient = LoginActivity.getClient();
-//                    Cookie sessionInfo;
-//                    List<Cookie> cookies = httpclient.getCookieStore()
-//                            .getCookies();
-//                    if (!cookies.isEmpty()) {
-//                        CookieSyncManager.createInstance(MainActivity.this);
-//                        CookieManager cookieManager = CookieManager
-//                                .getInstance();
-//
-//                        for (Cookie cookie : cookies) {
-//                            sessionInfo = cookie;
-//                            String cookieString = sessionInfo.getName() + "="
-//                                    + sessionInfo.getValue() + "; domain="
-//                                    + sessionInfo.getDomain();
-//
-//                            // Log.d(TAG, "Beta, cookie string is " +
-//                            // cookieString);
-//
-//                            cookieManager.setCookie(getString(R.string.u29), cookieString);
-//                            // Log.d(TAG, "MOBU29");
-//                            CookieSyncManager.getInstance().sync();
-//                        }
-//                    } else {
-//
-//                    }
-//
-//                }
-//
-//                if (url.contains(getString(R.string.u30))
-//                        || url.equals(getString(R.string.u31))
-//                        || url.endsWith("?type=relogin")
-//                        || url.equals(getString(R.string.u32))) {
-//
-//                    //		 Log.d(TAG, "INMOB3032");
-//
-//                } else {
-//
-//                    if (progressDialog == null
-//                            || progressDialog.isShowing() == false) {
-//
-//
-//                        progressDialog = new ProgressDialog(MainActivity.this,
-//                                R.style.full_screen_dialog) {
-//                            @Override
-//                            protected void onCreate(Bundle savedInstanceState) {
-//                                super.onCreate(savedInstanceState);
-//                                setContentView(R.layout.fill_dialog);
-//                                getWindow().setLayout(LayoutParams.FILL_PARENT,
-//                                        LayoutParams.FILL_PARENT);
-//                            }
-//                        };
-//                        progressDialog.getWindow().setBackgroundDrawableResource(R.drawable.splash);
-//                        progressDialog.setCancelable(false);
-//                        progressDialog.show();
-//                    }
-//
-//                }
-//
-//            }
         });
 
         webView.setWebChromeClient(new WebChromeClient() {
 
             public void onProgressChanged(WebView view, int progress) {
-
                 if (progress >= 100) {
-
                 }
-
             }
 
         });
-
         webView.loadUrl(url);
-
-
     }
 
     @SuppressWarnings("deprecation")
@@ -918,114 +748,10 @@ public class MainActivity extends Activity {
         alertDialog.show();
     }
 
-    public void jsAlertDialog1() {
-        webView.setWebChromeClient(new WebChromeClient() {
-
-            public void onProgressChanged(WebView view, int newProgress) {
-
-                // Log.e("onProgressChanged", " Value is: " + newProgress);
-                if (newProgress >= 98) {
-                    if (pDialog != null) {
-                        pDialog.dismiss();
-                    }
-                }
-                super.onProgressChanged(view, newProgress);
-            }
-
-            @Override
-            public boolean onJsAlert(WebView view, String url, String message,
-                                     JsResult result) {
-                final JsResult finalRes = result;
-                new AlertDialog.Builder(view.getContext())
-                        .setMessage(message)
-                        .setCancelable(false)
-                        .setPositiveButton(android.R.string.ok,
-                                new AlertDialog.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog,
-                                                        int which) {
-                                        finalRes.confirm();
-                                    }
-                                })
-
-                        .setNegativeButton(android.R.string.cancel,
-                                new OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog,
-                                                        int which) {
-                                        finalRes.cancel();
-                                    }
-                                })
-
-                        .create().show();
-                return true;
-            }
-
-            @Override
-            public boolean onJsConfirm(WebView view, String url,
-                                       String message, JsResult result) {
-
-                final JsResult finalRes = result;
-                new AlertDialog.Builder(view.getContext())
-                        .setMessage(message)
-                        .setPositiveButton(android.R.string.ok,
-                                new AlertDialog.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog,
-                                                        int which) {
-                                        finalRes.confirm();
-                                    }
-                                })
-                        .setNegativeButton(android.R.string.cancel,
-                                new OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog,
-                                                        int which) {
-                                        // TODO Auto-generated method stub
-                                        // dialog.dismiss();
-                                        finalRes.cancel();
-                                    }
-                                })
-
-                        .setCancelable(false).create().show();
-                return true;
-            }
-
-            @Override
-            public boolean onJsPrompt(WebView view, String url, String message,
-                                      String defaultValue, JsPromptResult result) {
-                final JsPromptResult finalRes = result;
-                new AlertDialog.Builder(view.getContext())
-                        .setMessage(message)
-                        .setPositiveButton(android.R.string.ok,
-                                new AlertDialog.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog,
-                                                        int which) {
-                                        finalRes.confirm();
-                                    }
-                                })
-                        .setNegativeButton(android.R.string.cancel,
-                                new OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog,
-                                                        int which) {
-                                        // TODO Auto-generated method stub
-                                        finalRes.cancel();
-                                    }
-                                })
-
-                        .setCancelable(false).create().show();
-                return true;
-            }
-
-        });
-    }
 
     /**
      * BITMAP FROM URL
      */
-
     public static InputStream getBitmapFromURL(String src) {
         try {
 
@@ -1052,17 +778,11 @@ public class MainActivity extends Activity {
     private void doPhotoPrint(String urlprint) {
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-
             Toast.makeText(getApplicationContext(),
                     "Please update your device to KitKat or above to use the print facility or directly E-Mail the PDF.", Toast.LENGTH_LONG).show();
-
         } else {
-
             try {
-
                 String abcc = urlprint;
-                //		Log.e(TAG, "print = "+abcc);
-
                 PrintHelper photoPrinter = new PrintHelper(MainActivity.this);
                 //PrintHelper photoPrinter = new PrintHelper(this);
                 photoPrinter.setScaleMode(PrintHelper.SCALE_MODE_FIT);
@@ -1078,8 +798,6 @@ public class MainActivity extends Activity {
     @SuppressLint("LongLogTag")
     @Override
     public void onBackPressed() {
-
-
         if (!AppUtils.isInternetOn(MainActivity.this)) {
             showAlertDialog(MainActivity.this, "No Internet Connection", "Please check your internet connection & try again !", false);
 
@@ -1436,12 +1154,9 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-
-        // Log.d(TAG, "onDestroy MainActivity");
         super.onDestroy();
         try {
             trimCache(this);
-
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -1451,7 +1166,6 @@ public class MainActivity extends Activity {
 
 
     void trimCache(Context context) {
-
         try {
             String pathadmob = this.getFilesDir().getParent() + "/app_webview";
             File dir = new File(pathadmob);
@@ -1503,34 +1217,6 @@ public class MainActivity extends Activity {
             return (_AcceptedIssuers);
         }
     }
-
-    public static void allowAllSSL() // third call
-    {
-        javax.net.ssl.HttpsURLConnection
-                .setDefaultHostnameVerifier(new HostnameVerifier() {
-                    public boolean verify(String hostname, SSLSession session) {
-                        return true;
-                    }
-                });
-
-        javax.net.ssl.SSLContext context = null;
-
-        if (trustManagers == null) {
-            trustManagers = new javax.net.ssl.TrustManager[]{new _FakeX509TrustManager()};
-        }
-
-        try {
-            context = javax.net.ssl.SSLContext.getInstance("TLS");
-            context.init(null, trustManagers, new SecureRandom());
-        } catch (NoSuchAlgorithmException e) {
-            // Log.e("allowAllSSL", e.toString());
-        } catch (KeyManagementException e) {
-            // Log.e("allowAllSSL", e.toString());
-        }
-        javax.net.ssl.HttpsURLConnection.setDefaultSSLSocketFactory(context
-                .getSocketFactory());
-    }
-
 
     public void openUrlInBrowser(String url) {
 

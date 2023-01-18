@@ -1,8 +1,11 @@
-package com.mobilestyx.jlrmaximizer.utils;
+package com.mobilestyx.JLRMaximizer.utils;
 
 import java.util.List;
+
+import io.michaelrocks.paranoid.Obfuscate;
 import okhttp3.Cookie;
 
+@Obfuscate
 public class GlobalVariable {
     public static String urlshare = "";
     public static String urljsshare = "";

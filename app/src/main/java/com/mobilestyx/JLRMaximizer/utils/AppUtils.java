@@ -1,4 +1,4 @@
-package com.mobilestyx.jlrmaximizer.utils;
+package com.mobilestyx.JLRMaximizer.utils;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,6 +10,9 @@ import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
+import io.michaelrocks.paranoid.Obfuscate;
+
+@Obfuscate
 public class AppUtils {
 
     private static final String TAG = "AppUtils";
@@ -22,31 +25,22 @@ public class AppUtils {
     }
 
     //to show a alert dialog in the app
-    public static AlertDialog createInfoDialog(@NonNull Context context, String title, @NonNull String message, DialogInterface.OnClickListener listener) {
-
-        return new AlertDialog.Builder(context)
-                .setTitle(title)
-                .setMessage(message)
-                .setCancelable(false)
-                .setNeutralButton("Ok", listener)
-                .create();
-    }
-
-    //to show a alert dialog in the app
     public static AlertDialog createInfoDialog(@NonNull Context context, String title, @NonNull String message) {
-
-        return new AlertDialog.Builder(context)
-                .setTitle(title)
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(title)
                 .setMessage(message)
                 .setCancelable(false)
-                .setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
                     }
-                })
-                .create();
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        return alertDialog;
     }
+    
 
     public static AlertDialog showAlertDialog(final Context context, String title, String message,
                                               final Boolean status) {

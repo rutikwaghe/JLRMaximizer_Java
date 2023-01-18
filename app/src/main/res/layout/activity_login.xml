@@ -1,97 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ScrollView01"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <LinearLayout
-        android:id="@+id/l_layout"
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_height="match_parent"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical"
-        android:gravity="center_vertical"
-        android:weightSum="1.0">
+        android:layout_width="match_parent"
+        >
 
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="84dp"
-            app:srcCompat="@drawable/jlrlogo" />
+            android:layout_width="189dp"
+            android:layout_height="68dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/jlrcrop"
+            tools:ignore="MissingConstraints" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:id="@+id/l2_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:weightSum="1.0">
+
+
+            <TextView
+                android:id="@+id/heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textStyle="bold"
+                android:text="@string/maximizer"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="250dp"
+                android:layout_height="48dp"
+                android:layout_below="@+id/heading"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/shape"
+                android:ems="10"
+                android:hint="@string/user_id"
+                android:paddingStart="10dp"
+                android:singleLine="true">
+
+                <requestFocus />
+            </EditText>
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="250dp"
+                android:layout_height="48dp"
+                android:layout_below="@+id/username"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/shape"
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:paddingLeft="10dp" />
+
+            <Button
+                android:id="@+id/login"
+                android:layout_width="250dp"
+                android:layout_height="48dp"
+                android:layout_below="@+id/password"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/shape2"
+                android:text="Login"
+                android:textColor="#ffffff" />
+
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/login"
+                android:button="@drawable/selector"
+                android:minHeight="48dp"
+                android:paddingLeft="5dp"
+                android:layout_marginRight="65dp"
+                android:text="Save Password"
+                android:textColor="#000000" />
 
         </LinearLayout>
 
-
-
-        <TextView
-            android:id="@+id/heading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/maximizer"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <EditText
-            android:id="@+id/username"
-            android:layout_width="250dp"
-            android:layout_height="48dp"
-            android:layout_below="@+id/heading"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/shape"
-            android:ems="10"
-            android:hint="@string/user_id"
-            android:paddingStart="10dp"
-            android:singleLine="true">
-
-            <requestFocus />
-        </EditText>
-
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="250dp"
-            android:layout_height="48dp"
-            android:layout_below="@+id/username"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/shape"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:paddingLeft="10dp" />
-
-        <Button
-            android:id="@+id/login"
-            android:layout_width="250dp"
-            android:layout_height="48dp"
-            android:layout_below="@+id/password"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/shape2"
-            android:text="Login"
-            android:textColor="#ffffff" />
-
-        <CheckBox
-            android:id="@+id/checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/login"
-            android:layout_marginLeft="80dp"
-            android:button="@drawable/selector"
-            android:minHeight="48dp"
-            android:paddingLeft="5dp"
-            android:text="Save Password"
-            android:textColor="#000000" />
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

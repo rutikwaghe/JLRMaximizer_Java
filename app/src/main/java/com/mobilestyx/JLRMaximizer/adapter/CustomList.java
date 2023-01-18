@@ -1,4 +1,4 @@
-package com.mobilestyx.jlrmaximizer.adapter;
+package com.mobilestyx.JLRMaximizer.adapter;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -6,10 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.mobilestyx.jlrmaximizer.R;
+import com.mobilestyx.JLRMaximizer.R;
 
+import io.michaelrocks.paranoid.Obfuscate;
+
+@Obfuscate
 public class CustomList extends ArrayAdapter<String>{
 
     private final Activity context;

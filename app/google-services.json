@@ -1,0 +1,213 @@
+{
+  "project_info": {
+    "project_number": "455163650522",
+    "project_id": "eatance-8d851",
+    "storage_bucket": "eatance-8d851.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:455163650522:android:ff8724cd0002200cfe20e3",
+        "android_client_info": {
+          "package_name": "com.mobilestyx.JLRMaximizer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "455163650522-8s7ec540fomk7qvpacvi4k6anraoscv5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUfgj-2VnxiauIjuO30t40VbSe8XzZxq8"
+        },
+        {
+          "current_key": "AIzaSyATLQ4LzWjUOPK8-E8_rf8urlkTMJuUsB8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "455163650522-8s7ec540fomk7qvpacvi4k6anraoscv5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "455163650522-5ldv6b2708k3o7gk9b33djpi1r6l9kqn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mobilestyx.favgreekdriver"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:455163650522:android:8d581a788cb30495fe20e3",
+        "android_client_info": {
+          "package_name": "com.mobilestyx.favgreekdriver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "455163650522-8s7ec540fomk7qvpacvi4k6anraoscv5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUfgj-2VnxiauIjuO30t40VbSe8XzZxq8"
+        },
+        {
+          "current_key": "AIzaSyATLQ4LzWjUOPK8-E8_rf8urlkTMJuUsB8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "455163650522-8s7ec540fomk7qvpacvi4k6anraoscv5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "455163650522-5ldv6b2708k3o7gk9b33djpi1r6l9kqn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mobilestyx.favgreekdriver"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:455163650522:android:bcb77d22ec4d85bdfe20e3",
+        "android_client_info": {
+          "package_name": "com.mobilestyx.fdriver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "455163650522-8s7ec540fomk7qvpacvi4k6anraoscv5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUfgj-2VnxiauIjuO30t40VbSe8XzZxq8"
+        },
+        {
+          "current_key": "AIzaSyATLQ4LzWjUOPK8-E8_rf8urlkTMJuUsB8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "455163650522-8s7ec540fomk7qvpacvi4k6anraoscv5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "455163650522-5ldv6b2708k3o7gk9b33djpi1r6l9kqn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mobilestyx.favgreekdriver"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:455163650522:android:2a4345632cc4eed9fe20e3",
+        "android_client_info": {
+          "package_name": "com.mobilestyx.foodapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "455163650522-c9j7paq8a6sb45ej6rhkcu348v9l0kls.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mobilestyx.foodapp",
+            "certificate_hash": "d31e36e4dd8fc467d2e323b404ca44751db6db7f"
+          }
+        },
+        {
+          "client_id": "455163650522-8s7ec540fomk7qvpacvi4k6anraoscv5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUfgj-2VnxiauIjuO30t40VbSe8XzZxq8"
+        },
+        {
+          "current_key": "AIzaSyATLQ4LzWjUOPK8-E8_rf8urlkTMJuUsB8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "455163650522-8s7ec540fomk7qvpacvi4k6anraoscv5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "455163650522-5ldv6b2708k3o7gk9b33djpi1r6l9kqn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mobilestyx.favgreekdriver"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:455163650522:android:5b6a47777f9d3426fe20e3",
+        "android_client_info": {
+          "package_name": "com.mobilestyx.jlrmaximizer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "455163650522-8s7ec540fomk7qvpacvi4k6anraoscv5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUfgj-2VnxiauIjuO30t40VbSe8XzZxq8"
+        },
+        {
+          "current_key": "AIzaSyATLQ4LzWjUOPK8-E8_rf8urlkTMJuUsB8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "455163650522-8s7ec540fomk7qvpacvi4k6anraoscv5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "455163650522-5ldv6b2708k3o7gk9b33djpi1r6l9kqn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mobilestyx.favgreekdriver"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

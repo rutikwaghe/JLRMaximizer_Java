@@ -1,4 +1,4 @@
-package com.mobilestyx.jlrmaximizer.utils;
+package com.mobilestyx.JLRMaximizer.utils;
 
 import java.security.NoSuchAlgorithmException;
 
@@ -7,6 +7,9 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import io.michaelrocks.paranoid.Obfuscate;
+
+@Obfuscate
 public class MCrypt {
 
     private String iv = "fedcba9876543210";

@@ -1,4 +1,4 @@
-package com.mobilestyx.jlrmaximizer.utils;
+package com.mobilestyx.JLRMaximizer.utils;
 
 import android.app.Activity;
 import android.app.Application;
@@ -6,6 +6,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.WindowManager;
 
+import io.michaelrocks.paranoid.Obfuscate;
+
+@Obfuscate
 public class MyApplicationContext extends Application {
     private Context context;
     public void onCreate() {

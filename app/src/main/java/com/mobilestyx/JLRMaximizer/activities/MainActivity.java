@@ -1,5 +1,6 @@
 package com.mobilestyx.JLRMaximizer.activities;
 
+import static com.mobilestyx.JLRMaximizer.utils.AppUtils.createInfoDialog;
 import static com.mobilestyx.JLRMaximizer.utils.PermissionActivity.PERMISSION_REQUEST_CODE;
 import static com.mobilestyx.JLRMaximizer.utils.PermissionsChecker.REQUIRED_PERMISSION;
 
@@ -29,10 +30,13 @@ import android.os.StrictMode;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.print.PrintHelper;
 
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.LayoutAlgorithm;
@@ -52,6 +56,7 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.List;
 
 import javax.net.ssl.TrustManager;
 
@@ -61,7 +66,6 @@ import com.mobilestyx.JLRMaximizer.utils.CapturePhotoUtils;
 import com.mobilestyx.JLRMaximizer.utils.GlobalVariable;
 import com.mobilestyx.JLRMaximizer.utils.PermissionActivity;
 import com.mobilestyx.JLRMaximizer.utils.PermissionsChecker;
-import com.mobilestyx.JLRMaximizer.utils.PrintHelper;
 
 import io.michaelrocks.paranoid.Obfuscate;
 
@@ -144,14 +148,17 @@ public class MainActivity extends Activity {
             @Override
             public void run() {
                 webView.clearCache(true);
-//                WebStorage.getInstance().deleteAllData();
+                webView.clearHistory();
+                webView.clearFormData();
+                webView.clearCache(true);
                 pDialog.dismiss();
                 Intent i = new Intent(MainActivity.this, LoginActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                String keyIdentifer = null;
                 i.putExtra("code", "2");
                 startActivity(i);
                 finish();
+//                WebStorage.getInstance().deleteAllData();
+//                String keyIdentifer = null;
             }
         }, 1000);
     }
@@ -171,13 +178,13 @@ public class MainActivity extends Activity {
                 }
 
                 if (!AppUtils.isInternetOn(MainActivity.this)) {
-                    showAlertDialog(MainActivity.this, "No Internet Connection", "Please check your internet connection & try again !", false);
+                    createInfoDialog(MainActivity.this, "No Internet Connection", "Please check your internet connection & try again !");
                 } else {
                     if (url.endsWith("?type=relogin")) {
                         webView.loadUrl(getString(R.string.u5));
                         Intent i2 = new Intent(MainActivity.this, LoginActivity.class);
                         i2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        String keyIdentifer = null;
+//                        String keyIdentifer = null;
 
                         i2.putExtra("code", "1");// adding additional data using
                         startActivity(i2);
@@ -206,7 +213,7 @@ public class MainActivity extends Activity {
                             public void onClick(View v) {
 
                                 if (!AppUtils.isInternetOn(MainActivity.this)) {
-                                    showAlertDialog(MainActivity.this, "No Internet Connection", "Please check your internet connection & try again !", false);
+                                    createInfoDialog(MainActivity.this, "No Internet Connection", "Please check your internet connection & try again !");
                                 } else {
                                     doPhotoPrint(GlobalVariable.getGlobalprint());
                                 }
@@ -218,11 +225,10 @@ public class MainActivity extends Activity {
                             @Override
                             public void onClick(View v) {
                                 if (!AppUtils.isInternetOn(MainActivity.this)) {
-                                    showAlertDialog(
+                                    createInfoDialog(
                                             MainActivity.this,
                                             "No Internet Connection",
-                                            "Please check your internet connection & try again !",
-                                            false);
+                                            "Please check your internet connection & try again !");
                                 } else {
 
                                     homeBtn.setVisibility(View.GONE);
@@ -240,7 +246,7 @@ public class MainActivity extends Activity {
                     if (url.substring(url.length() - 4).equalsIgnoreCase(".csv")) {
 
                         if (!AppUtils.isInternetOn(MainActivity.this)) {
-                            showAlertDialog(MainActivity.this, "No Internet Connection", "Please check your internet connection & try again !", false);
+                            createInfoDialog(MainActivity.this, "No Internet Connection", "Please check your internet connection & try again !");
                         } else {
 
                             if (checker.lacksPermissions(REQUIRED_PERMISSION)) {
@@ -293,7 +299,7 @@ public class MainActivity extends Activity {
                     if (url.substring(url.length() - 4).equalsIgnoreCase(".pdf")) {
 
                         if (!AppUtils.isInternetOn(MainActivity.this)) {
-                            showAlertDialog(MainActivity.this, "No Internet Connection", "Please check your internet connection & try again !", false);
+                            createInfoDialog(MainActivity.this, "No Internet Connection", "Please check your internet connection & try again !");
 
                         } else {
 
@@ -569,6 +575,7 @@ public class MainActivity extends Activity {
                         }
                     }
                     if (url.contains(getString(R.string.u14))) {
+                        webView.loadUrl(getString(R.string.u14));
                         webView.loadUrl(getString(R.string.u15));
                         logoutWebview();
 //                        logout LogoutTask = new logout();
@@ -698,11 +705,37 @@ public class MainActivity extends Activity {
                     webView.stopLoading();
                 } catch (Exception e) {
                 }
-                showAlertDialog(MainActivity.this, "No Internet Connection",
-                        "Please check your internet connection & try again !",
-                        false);
+                createInfoDialog(MainActivity.this, "No Internet Connection",
+                        "Please check your internet connection & try again !");
                 super.onReceivedError(webView, errorCode, description,
                         failingUrl);
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+
+                if (url.contains(getString(R.string.u30))
+                        || url.equals(getString(R.string.u31))
+                        || url.endsWith("?type=relogin")
+                        || url.equals(getString(R.string.u32))) {
+                    Log.d(TAG, "onPageStarted: ");
+                } else {
+                    if (progressDialog == null || progressDialog.isShowing() == false) {
+
+                        progressDialog = new ProgressDialog(MainActivity.this,R.style.full_screen_dialog) {
+                            @Override
+                            protected void onCreate(Bundle savedInstanceState) {
+                                super.onCreate(savedInstanceState);
+                                setContentView(R.layout.fill_dialog);
+                                getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+                            }
+                        };
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
+                    }
+
+                }
+
             }
 
         });
@@ -717,37 +750,6 @@ public class MainActivity extends Activity {
         });
         webView.loadUrl(url);
     }
-
-    @SuppressWarnings("deprecation")
-    public void showAlertDialog(Context context, String title, String message,
-                                final Boolean status) {
-        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-        alertDialog.setCancelable(false);
-
-        alertDialog.setTitle(title);
-        alertDialog.setMessage(message);
-        if (status) {
-            alertDialog.setButton("Update",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                            startActivity(new Intent(
-                                    Intent.ACTION_VIEW,
-                                    Uri.parse("https://play.google.com/store/apps/details?id=com.mobilestyx.JLRMaximizer")));
-                        }
-                    });
-        } else {
-            alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    // finish();
-                    // System.exit(0);
-                }
-            });
-        }
-
-        alertDialog.show();
-    }
-
 
     /**
      * BITMAP FROM URL
@@ -776,31 +778,22 @@ public class MainActivity extends Activity {
      * Photo Print SCALE MODE FIT
      */
     private void doPhotoPrint(String urlprint) {
+        String abcc = urlprint;
+        PrintHelper photoPrinter = new PrintHelper(this);//can use getActivity() here
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            Toast.makeText(getApplicationContext(),
-                    "Please update your device to KitKat or above to use the print facility or directly E-Mail the PDF.", Toast.LENGTH_LONG).show();
-        } else {
-            try {
-                String abcc = urlprint;
-                PrintHelper photoPrinter = new PrintHelper(MainActivity.this);
-                //PrintHelper photoPrinter = new PrintHelper(this);
-                photoPrinter.setScaleMode(PrintHelper.SCALE_MODE_FIT);
-                Bitmap bitmap = BitmapFactory.decodeStream(getBitmapFromURL(abcc));
-                photoPrinter.printBitmap("JLR Pdf", bitmap);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        photoPrinter.setScaleMode(PrintHelper.SCALE_MODE_FIT);
 
-        }
+        Bitmap bitmap = BitmapFactory.decodeStream(getBitmapFromURL(abcc));
+
+        photoPrinter.printBitmap("JLR Pdf", bitmap);
     }
+
 
     @SuppressLint("LongLogTag")
     @Override
     public void onBackPressed() {
         if (!AppUtils.isInternetOn(MainActivity.this)) {
-            showAlertDialog(MainActivity.this, "No Internet Connection", "Please check your internet connection & try again !", false);
-
+            createInfoDialog(MainActivity.this, "No Internet Connection", "Please check your internet connection & try again !");
         } else {
 
             if (webView.getUrl().startsWith("https://drive.google.com/")) {
@@ -1223,5 +1216,59 @@ public class MainActivity extends Activity {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(browserIntent);
     }
+
+
+    //    private void doPhotoPrint(String urlprint) {
+//
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+//            Toast.makeText(getApplicationContext(),
+//                    "Please update your device to KitKat or above to use the print facility or directly E-Mail the PDF.", Toast.LENGTH_LONG).show();
+//        } else {
+//            try {
+//                String abcc = urlprint;
+//                Log.d(TAG, "doPhotoPrintdoPhotoPrintdoPhotoPrint  " + abcc);
+//                PrintHelper photoPrinter = new PrintHelper(getApplicationContext());
+//                //PrintHelper photoPrinter = new PrintHelper(this);
+//                photoPrinter.setScaleMode(PrintHelper.SCALE_MODE_FIT);
+//                Bitmap bitmap = BitmapFactory.decodeStream(getBitmapFromURL(abcc));
+//                photoPrinter.printBitmap("JLR Pdf", bitmap);
+//            } catch (Exception e) {
+//                Log.d(TAG, "doPhotoPrintdoPhotoPrintdoPhotoPrint  " + e);
+//                e.printStackTrace();
+//            }
+//
+//        }
+//    }
+
+//    @SuppressWarnings("deprecation")
+//    public void showAlertDialog(Context context, String title, String message,
+//                                final Boolean status) {
+//        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+//        alertDialog.setCancelable(false);
+//
+//        alertDialog.setTitle(title);
+//        alertDialog.setMessage(message);
+//        if (status) {
+//            alertDialog.setButton("Update",
+//                    new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            finish();
+//                            startActivity(new Intent(
+//                                    Intent.ACTION_VIEW,
+//                                    Uri.parse("https://play.google.com/store/apps/details?id=com.mobilestyx.JLRMaximizer")));
+//                        }
+//                    });
+//        } else {
+//            alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+//                public void onClick(DialogInterface dialog, int which) {
+//                    // finish();
+//                    // System.exit(0);
+//                }
+//            });
+//        }
+//
+//        alertDialog.show();
+//    }
+
 
 }

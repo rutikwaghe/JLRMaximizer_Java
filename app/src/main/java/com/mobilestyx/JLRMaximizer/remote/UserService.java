@@ -7,6 +7,7 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -16,6 +17,6 @@ public interface UserService {
     @POST("login/validate_login_webservice")
     Call<JsonObject> userLogin(@Field("userid") String userid, @Field("password") String password);
 
-    @GET("app")
-    Call<JsonObject> splashVersion(@Query("name") String name);
+    @GET("app?name=JLRMax")
+    Call<JsonObject> splashVersion();
 }

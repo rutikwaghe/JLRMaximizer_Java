@@ -1,5 +1,7 @@
 package com.mobilestyx.JLRMaximizer.remote;
 
+import android.util.Log;
+
 import com.mobilestyx.JLRMaximizer.R;
 
 import java.util.concurrent.TimeUnit;
@@ -25,7 +27,6 @@ public class ApiClient {
                 .addInterceptor(httpLoggingInterceptor)
 //                .certificatePinner(getCertificatePinner())
                 .build();
-
 
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())

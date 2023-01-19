@@ -2,15 +2,19 @@ package com.mobilestyx.JLRMaximizer.activities;
 
 import static com.mobilestyx.JLRMaximizer.utils.AppUtils.createInfoDialog;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Layout;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -72,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                 if ((getName != null) && (getName == "1" || getName.equalsIgnoreCase("1"))) {
                     createInfoDialog(LoginActivity.this, "Alert!", "Please login with your new password !");
                 } else if ((getName != null) && (getName == "2" || getName.equalsIgnoreCase("2"))) {
-                   delayLogout();
+                    delayLogout();
                 }
             }
         } catch (Exception e) {
@@ -131,10 +135,23 @@ public class LoginActivity extends AppCompatActivity {
             String pass = sharedPreferences.getString("pass", "");
             String sharedPass = new String(mcrypt.decrypt(pass));
             password.setText(sharedPass.trim());
+
+            if (!sharedId.equals("")) {
+                checkbox.setChecked(true);
+            } else {
+                checkbox.setChecked(false);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+
+        findViewById(R.id.l2_layout).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                hideKeyboard(view);
+            }
+        });
 
     }
 
@@ -145,7 +162,7 @@ public class LoginActivity extends AppCompatActivity {
             protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.fill_dialog);
-                getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT);
+                getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
             }
         };
         pDialog.setCancelable(false);
@@ -226,7 +243,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void delayLogout(){
+    public void delayLogout() {
         pDialog = new ProgressDialog(LoginActivity.this, R.style.full_screen_dialog) {
             @Override
             protected void onCreate(Bundle savedInstanceState) {
@@ -303,5 +320,18 @@ public class LoginActivity extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        return true;
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager imm =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
 }
 

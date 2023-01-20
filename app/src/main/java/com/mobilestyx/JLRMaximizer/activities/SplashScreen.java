@@ -15,6 +15,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.play.core.appupdate.AppUpdateInfo;
@@ -26,14 +27,20 @@ import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.OnSuccessListener;
 import com.google.android.play.core.tasks.Task;
+import com.google.gson.JsonObject;
 import com.mobilestyx.JLRMaximizer.BuildConfig;
 import com.mobilestyx.JLRMaximizer.R;
+import com.mobilestyx.JLRMaximizer.remote.ApiClient;
+import com.mobilestyx.JLRMaximizer.remote.UserService;
 import com.mobilestyx.JLRMaximizer.utils.AppUtils;
 import com.scottyab.rootbeer.RootBeer;
 
 import java.io.File;
 
 import io.michaelrocks.paranoid.Obfuscate;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 @Obfuscate
 public class SplashScreen extends AppCompatActivity {
@@ -54,6 +61,9 @@ public class SplashScreen extends AppCompatActivity {
 
         appUpdateManager = AppUpdateManagerFactory.create(SplashScreen.this);
         appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+
+        TextView versTextView = (TextView)findViewById(R.id.versionTextView);
+        versTextView.setText("Ver " +BuildConfig.VERSION_NAME);
 
         try {
             pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
@@ -174,36 +184,36 @@ public class SplashScreen extends AppCompatActivity {
 
 
 //    api update code
-//    public void checkupdate() {
-//
-//        UserService retrofit = ApiClient.getUserService();
-//        Call<JsonObject> loginResponseCall = retrofit.splashVersion();
-//
-//        loginResponseCall.enqueue(new Callback<JsonObject>() {
-//            @Override
-//            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-//                Log.d(TAG, "SplashVersionCodebody: " + response.body());
-//                Log.d(TAG, "SplashVersionCodeSuccess: " + response.isSuccessful());
-//                latestVersion = String.valueOf(response);
-//                if (!latestVersion.isEmpty() || latestVersion != null) {
-//                    Log.d(TAG, "!latestVersion.trim().equals(versionCode.trim()): " + latestVersion.trim() + versionCode.trim());
-//                    if (!latestVersion.trim().equals(versionCode.trim())) {
-//                        createInfoDialog(SplashScreen.this, "Update Notice !", "You are using an outdated version, please uninstall your application and get the latest version from Google Play Store!");
-//                    } else {
-//                        Intent i = new Intent(SplashScreen.this, LoginActivity.class);
-//                        startActivity(i);
-//                        finish();
-//                    }
-//                } else {
-//                    createInfoDialog(SplashScreen.this, "Connection Error !", "Application is facing difficulties in connecting to server. Please check your data connection or try after sometime");
-//                }
-//            }
-//            @Override
-//            public void onFailure(Call<JsonObject> call, Throwable t) {
-//                Log.d(TAG, "onFailureonFailureonFailure: " + t);
-//            }
-//        });
-//    }
+    public void checkupdate() {
+
+        UserService retrofit = ApiClient.getUserService();
+        Call<JsonObject> loginResponseCall = retrofit.splashVersion();
+
+        loginResponseCall.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                Log.d(TAG, "SplashVersionCodebody: " + response.body());
+                Log.d(TAG, "SplashVersionCodeSuccess: " + response.isSuccessful());
+                latestVersion = String.valueOf(response);
+                if (!latestVersion.isEmpty() || latestVersion != null) {
+                    Log.d(TAG, "!latestVersion.trim().equals(versionCode.trim()): " + latestVersion.trim() + versionCode.trim());
+                    if (!latestVersion.trim().equals(versionCode.trim())) {
+                        createInfoDialog(SplashScreen.this, "Update Notice !", "You are using an outdated version, please uninstall your application and get the latest version from Google Play Store!");
+                    } else {
+                        Intent i = new Intent(SplashScreen.this, LoginActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
+                } else {
+                    createInfoDialog(SplashScreen.this, "Connection Error !", "Application is facing difficulties in connecting to server. Please check your data connection or try after sometime");
+                }
+            }
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.d(TAG, "onFailureonFailureonFailure: " + t);
+            }
+        });
+    }
 
 
 }

@@ -98,7 +98,12 @@ public class LoginActivity extends AppCompatActivity {
                     password.requestFocus();
                     password.setText("");
                 } else {
-                    doLogin();
+                    try {
+                        doLogin();
+                    } catch (Exception e) {
+                        createInfoDialog(LoginActivity.this, APP_NAME, "Something went wrong, Please try again later");
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -146,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
-        findViewById(R.id.l2_layout).setOnClickListener(new View.OnClickListener(){
+        findViewById(R.id.l2_layout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 hideKeyboard(view);
@@ -329,7 +334,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void hideKeyboard(View view) {
-        InputMethodManager imm =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 

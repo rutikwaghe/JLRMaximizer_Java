@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <domain-config>
+        <domain includeSubdomains="true">www.example.com</domain>
+        <pin-set>
+            <pin digest="SHA-256">0e4kSeOp00XjU+LnIBR+b1j0rfDmIQtrsLD+kuxr4dk=</pin>
+        </pin-set>
+    </domain-config>
+</network-security-config>

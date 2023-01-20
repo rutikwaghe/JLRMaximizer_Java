@@ -54,11 +54,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-import java.util.List;
-
-import javax.net.ssl.TrustManager;
 
 import com.mobilestyx.JLRMaximizer.R;
 import com.mobilestyx.JLRMaximizer.utils.AppUtils;
@@ -909,7 +904,7 @@ public class MainActivity extends Activity {
                 Log.d(TAG, "INMOBU47 & 100");
                 homeBtn.setVisibility(View.GONE);
                 printBtn.setVisibility(View.GONE);
-                btn_screenshot.setVisibility(View.GONE);
+//                btn_screenshot.setVisibility(View.GONE);
                 webView.loadUrl(GlobalVariable.getStatusBackurl());
 
             } else if (webView.getUrl().contains(getString(R.string.u48))) {
@@ -1189,26 +1184,6 @@ public class MainActivity extends Activity {
     protected void onStop() {
         super.onStop();
         // WebService.invokeHelloWorldWS("FooFoo", "booboo", "Post_PDF_App");
-
-    }
-
-    private static TrustManager[] trustManagers;
-
-    public static class _FakeX509TrustManager implements
-            javax.net.ssl.X509TrustManager {
-        private static final X509Certificate[] _AcceptedIssuers = new X509Certificate[]{};
-
-        public void checkClientTrusted(X509Certificate[] arg0, String arg1)
-                throws CertificateException {
-        }
-
-        public void checkServerTrusted(X509Certificate[] arg0, String arg1)
-                throws CertificateException {
-        }
-
-        public X509Certificate[] getAcceptedIssuers() {
-            return (_AcceptedIssuers);
-        }
     }
 
     public void openUrlInBrowser(String url) {
@@ -1216,7 +1191,6 @@ public class MainActivity extends Activity {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(browserIntent);
     }
-
 
     //    private void doPhotoPrint(String urlprint) {
 //
@@ -1270,5 +1244,23 @@ public class MainActivity extends Activity {
 //        alertDialog.show();
 //    }
 
+//    private static TrustManager[] trustManagers;
+//
+//    public static class _FakeX509TrustManager implements
+//            javax.net.ssl.X509TrustManager {
+//        private static final X509Certificate[] _AcceptedIssuers = new X509Certificate[]{};
+//
+//        public void checkClientTrusted(X509Certificate[] arg0, String arg1)
+//                throws CertificateException {
+//        }
+//
+//        public void checkServerTrusted(X509Certificate[] arg0, String arg1)
+//                throws CertificateException {
+//        }
+//
+//        public X509Certificate[] getAcceptedIssuers() {
+//            return (_AcceptedIssuers);
+//        }
+//    }
 
 }

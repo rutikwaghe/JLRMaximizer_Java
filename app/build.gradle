@@ -10,6 +10,14 @@ apply plugin: 'io.michaelrocks.paranoid'
 
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('E:\\MyPdfs\\JLR_Phase2_Live 3\\JLRKEYSTORE.jks')
+            storePassword '123456789'
+            keyAlias 'jlr'
+            keyPassword '123456789'
+        }
+    }
     namespace 'com.mobilestyx.JLRMaximizer'
     compileSdk 33
     useLibrary 'org.apache.http.legacy'

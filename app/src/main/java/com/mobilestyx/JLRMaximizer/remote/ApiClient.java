@@ -1,12 +1,7 @@
 package com.mobilestyx.JLRMaximizer.remote;
 
-import android.util.Log;
-
-import com.mobilestyx.JLRMaximizer.R;
-
-import java.util.concurrent.TimeUnit;
-
 import io.michaelrocks.paranoid.Obfuscate;
+import okhttp3.CertificatePinner;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -20,21 +15,28 @@ public class ApiClient {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
-                .addInterceptor(httpLoggingInterceptor)
-//                .certificatePinner(getCertificatePinner())
+        OkHttpClient.Builder httpBuilder = new OkHttpClient.Builder();
+        httpBuilder.addInterceptor(httpLoggingInterceptor);
+
+        CertificatePinner certificatePinner = new CertificatePinner.Builder()
+                .add("www.jlrmaximizer.in", "sha256/0e4kSeOp00XjU+LnIBR+b1j0rfDmIQtrsLD+kuxr4dk=")
                 .build();
+
+        OkHttpClient client1 = httpBuilder.certificatePinner(certificatePinner).build();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl("https://www.jlrmaximizer.in/")
-                .client(okHttpClient)
+                .client(client1)
                 .build();
 
         return retrofit;
+    }
+
+    public static UserService getUserService() {
+        UserService userService = getRetrofit().create(UserService.class);
+
+        return userService;
     }
 
 //    private static CertificatePinner getCertificatePinner() {
@@ -44,11 +46,5 @@ public class ApiClient {
 //                .add("https://www.jlrmaximizer.in/", "sha256/nkg9VQd+wjcCEJdZ+84DxZz9OZ97qGpyrB7v4qMqS8g=")
 //                .build();
 //    }
-
-    public static UserService getUserService() {
-        UserService userService = getRetrofit().create(UserService.class);
-
-        return userService;
-    }
 
 }

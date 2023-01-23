@@ -227,13 +227,15 @@ public class LoginActivity extends AppCompatActivity {
                         createInfoDialog(LoginActivity.this, APP_NAME, "Your account has been disabled for security reasons ! Please try again later in sometime !");
 
                     } else {
-//                  timeRemaining = null;
+//                      timeRemaining = null;
                         linkResponse = null;
                         msgResponse = null;
-                        Toast.makeText(LoginActivity.this, "Login Unsuccessful", Toast.LENGTH_LONG).show();
+                        createInfoDialog(LoginActivity.this, APP_NAME, "Login Unsuccessful");
+//                      Toast.makeText(LoginActivity.this, "Login Unsuccessful", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(LoginActivity.this, "Something went wrong, Please try again later ", Toast.LENGTH_LONG).show();
+                    createInfoDialog(LoginActivity.this, APP_NAME, "Something went wrong, Please try again later");
+//                  Toast.makeText(LoginActivity.this, "Something went wrong, Please try again later", Toast.LENGTH_LONG).show();
                 }
             }
 

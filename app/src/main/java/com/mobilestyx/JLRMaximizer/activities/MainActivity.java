@@ -444,8 +444,8 @@ public class MainActivity extends Activity {
                         webView.getSettings().setBuiltInZoomControls(true);
                         webView.getSettings().setSupportZoom(true);
                         webView.getSettings().setDisplayZoomControls(true);
-                        homeBtn.setVisibility(View.VISIBLE);
-                        printBtn.setVisibility(View.VISIBLE);
+//                        homeBtn.setVisibility(View.VISIBLE);
+//                        printBtn.setVisibility(View.VISIBLE);
                         // btn_screenshot.setVisibility(View.GONE);
                     }
 
@@ -478,8 +478,8 @@ public class MainActivity extends Activity {
                         webView.getSettings().setBuiltInZoomControls(true);
                         webView.getSettings().setSupportZoom(true);
                         webView.getSettings().setDisplayZoomControls(true);
-                        homeBtn.setVisibility(View.VISIBLE);
-                        printBtn.setVisibility(View.VISIBLE);
+//                        homeBtn.setVisibility(View.VISIBLE);
+//                        printBtn.setVisibility(View.VISIBLE);
                         // btn_screenshot.setVisibility(View.GONE);
 
                     }
@@ -510,8 +510,8 @@ public class MainActivity extends Activity {
                         webView.getSettings().setBuiltInZoomControls(true);
                         webView.getSettings().setSupportZoom(true);
                         webView.getSettings().setDisplayZoomControls(true);
-                        homeBtn.setVisibility(View.VISIBLE);
-                        printBtn.setVisibility(View.VISIBLE);
+//                        homeBtn.setVisibility(View.VISIBLE);
+//                        printBtn.setVisibility(View.VISIBLE);
                         // btn_screenshot.setVisibility(View.GONE);
 
                     }
@@ -521,8 +521,8 @@ public class MainActivity extends Activity {
                         webView.getSettings().setBuiltInZoomControls(true);
                         webView.getSettings().setSupportZoom(true);
                         webView.getSettings().setDisplayZoomControls(true);
-                        homeBtn.setVisibility(View.VISIBLE);
-                        printBtn.setVisibility(View.VISIBLE);
+//                        homeBtn.setVisibility(View.VISIBLE);
+//                        printBtn.setVisibility(View.VISIBLE);
 
                     }
 
@@ -682,7 +682,19 @@ public class MainActivity extends Activity {
                 return true;
             }
 
+
             public void onPageFinished(final WebView view, String url) {
+                if (
+                        url.contains(getString(R.string.u9)) ||
+                        url.contains(getString(R.string.u8)) ||
+                        url.contains(getString(R.string.u11)) ||
+                        url.contains(getString(R.string.u120))
+                ) {
+                    Log.d(TAG, "onPageFinished: " + url);
+                    homeBtn.setVisibility(View.VISIBLE);
+                    printBtn.setVisibility(View.VISIBLE);
+                }
+
                 if (progressDialog != null && progressDialog.isShowing()) {
                     progressDialog.dismiss();
                 }
@@ -717,7 +729,7 @@ public class MainActivity extends Activity {
                 } else {
                     if (progressDialog == null || progressDialog.isShowing() == false) {
 
-                        progressDialog = new ProgressDialog(MainActivity.this,R.style.full_screen_dialog) {
+                        progressDialog = new ProgressDialog(MainActivity.this, R.style.full_screen_dialog) {
                             @Override
                             protected void onCreate(Bundle savedInstanceState) {
                                 super.onCreate(savedInstanceState);

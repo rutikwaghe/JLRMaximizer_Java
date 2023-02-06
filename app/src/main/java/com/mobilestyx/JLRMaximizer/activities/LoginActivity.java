@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
             if (bd != null) {
                 String getName = intent.getStringExtra("code");
                 if ((getName != null) && (getName == "1" || getName.equalsIgnoreCase("1"))) {
-                    createInfoDialog(LoginActivity.this, "Alert!", "Please login with your new password !");
+                    createInfoDialog(LoginActivity.this, APP_NAME, "Please login with your new password !");
                 } else if ((getName != null) && (getName == "2" || getName.equalsIgnoreCase("2"))) {
                     delayLogout();
                 }
@@ -92,11 +92,11 @@ public class LoginActivity extends AppCompatActivity {
                 username1 = username.getText().toString().trim();
                 password1 = password.getText().toString().trim();
                 if (username1.length() == 0) {
-                    Toast.makeText(LoginActivity.this, "Please Enter User ID", Toast.LENGTH_SHORT).show();
+                    createInfoDialog(LoginActivity.this, APP_NAME, "Please Enter User ID");
                     username.requestFocus();
                     username.setText("");
                 } else if (password1.length() == 0) {
-                    Toast.makeText(LoginActivity.this, "Please Enter Password", Toast.LENGTH_SHORT).show();
+                    createInfoDialog(LoginActivity.this, APP_NAME, "Please Enter Password");
                     password.requestFocus();
                     password.setText("");
                 } else {
@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
             masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
         } catch (Exception e) {
             e.printStackTrace();
-            createInfoDialog(LoginActivity.this, "Network Connection", "Something went wrong, Please try after sometime!");
+            createInfoDialog(LoginActivity.this, APP_NAME, "Something went wrong, Please try after sometime!");
         }
 
         try {
@@ -133,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
             );
         } catch (Exception e) {
             e.printStackTrace();
-            createInfoDialog(LoginActivity.this, "Network Connection", "Something went wrong, Please try after sometime!");
+            createInfoDialog(LoginActivity.this, APP_NAME, "Something went wrong, Please try after sometime!");
         }
 
         try {
@@ -183,11 +183,11 @@ public class LoginActivity extends AppCompatActivity {
             encryptedPass = MCrypt.bytesToHex(mcrypt.encrypt(password1));
         } catch (Exception e) {
             e.printStackTrace();
-            createInfoDialog(LoginActivity.this, "Network Connection", "Something went wrong, Please try after sometime!");
+            createInfoDialog(LoginActivity.this, APP_NAME, "Something went wrong, Please try after sometime!");
         }
 
         if (!new AppUtils().isInternetOn(LoginActivity.this)) {
-            createInfoDialog(LoginActivity.this, "No Internet Connection", "Please... Check your internet connection and Try again!");
+            createInfoDialog(LoginActivity.this, APP_NAME, "Please... Check your internet connection and Try again!");
         } else {
 
             UserService retrofit = ApiClient.getUserService();
@@ -232,34 +232,32 @@ public class LoginActivity extends AppCompatActivity {
                                     startActivity(intent1);
 
                                 } else if (msgResponse.contains("Wrong User ID or Password!")) {
-                                    Log.d("TAG", "onSuccessLoginWrong !" + response.body().toString());
                                     createInfoDialog(LoginActivity.this, APP_NAME, "Please enter a valid User ID & Password !!");
 
                                 } else if (msgResponse.contains("User exceeded max login attempt.")) {
-                                    Log.d("TAG", "onSuccessLoginexceeded !" + response.body().toString());
                                     createInfoDialog(LoginActivity.this, APP_NAME, "Your account has been disabled for security reasons ! Please try again later in sometime !");
 
                                 } else {
                                     linkResponse = null;
                                     msgResponse = null;
-                                    Toast.makeText(LoginActivity.this, "Login Unsuccessful!", Toast.LENGTH_LONG).show();
+                                    createInfoDialog(LoginActivity.this, APP_NAME, "Login Unsuccessful!!");
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
-                                Toast.makeText(LoginActivity.this, "Something Went Wrong, Please try after sometime!", Toast.LENGTH_SHORT).show();
+                                createInfoDialog(LoginActivity.this, APP_NAME, "Something went wrong, Please try after sometime!");
                             }
                         } else {
-                            Toast.makeText(LoginActivity.this, "Login Unsuccessful!", Toast.LENGTH_LONG).show();
+                            createInfoDialog(LoginActivity.this, APP_NAME, "Login Unsuccessful!!");
                         }
                     } else {
-                        Toast.makeText(LoginActivity.this, "Login Unsuccessful!", Toast.LENGTH_LONG).show();
+                        createInfoDialog(LoginActivity.this, APP_NAME, "Login Unsuccessful!!");
                     }
                 }
 
                 @Override
                 public void onFailure(Call<JsonObject> call, Throwable t) {
                     pDialog.dismiss();
-                    Toast.makeText(LoginActivity.this, "Login Unsuccessful!", Toast.LENGTH_LONG).show();
+                    createInfoDialog(LoginActivity.this, APP_NAME, "Login Unsuccessful!!");
                 }
             });
         }

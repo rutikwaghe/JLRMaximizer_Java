@@ -36,6 +36,13 @@ import com.mobilestyx.JLRMaximizer.utils.AppUtils;
 import com.scottyab.rootbeer.RootBeer;
 
 import java.io.File;
+import java.net.Proxy;
+import java.net.ProxySelector;
+import java.net.URI;
+import java.security.KeyStore;
+import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.Enumeration;
 
 import io.michaelrocks.paranoid.Obfuscate;
 import retrofit2.Call;
@@ -49,6 +56,7 @@ public class SplashScreen extends AppCompatActivity {
     private String latestVersion = null;
     private PackageInfo pinfo = null;
     private String versionCode;
+    public String APP_NAME;
 
     private AppUpdateManager appUpdateManager;
     Task<AppUpdateInfo> appUpdateInfoTask;
@@ -59,6 +67,7 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        APP_NAME = getString(R.string.app_name);
         appUpdateManager = AppUpdateManagerFactory.create(SplashScreen.this);
         appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
 
@@ -70,17 +79,17 @@ public class SplashScreen extends AppCompatActivity {
             versionCode = String.valueOf(BuildConfig.VERSION_CODE);
         } catch (PackageManager.NameNotFoundException e1) {
             e1.printStackTrace();
-            createInfoDialog(SplashScreen.this, "Network Connection", "Something went wrong, Please try after sometime!");
+            createInfoDialog(SplashScreen.this, APP_NAME, "Something went wrong, Please try after sometime!");
         }
 
-
-   
         RootBeer rootBeer = new RootBeer(SplashScreen.this);
         if (rootBeer.isRooted() || checkOTACerts()) {
-            createInfoDialog(SplashScreen.this, "Root Detected!", "Your device is Rooted! Please unroot the device to run the application.");
+            createInfoDialog(SplashScreen.this, APP_NAME, "Your device is Rooted! Please unroot the device to run the application.");
+        } else if (getUser() || getAddress()) {
+            createInfoDialog(SplashScreen.this, APP_NAME, "Something went wrong, Please try after sometime!");
         } else {
             if (!AppUtils.isInternetOn(SplashScreen.this)) {
-                createInfoDialog(SplashScreen.this, "No Internet Connection", "Please check your internet connection & try again !");
+                createInfoDialog(SplashScreen.this, APP_NAME, "Please check your internet connection & try again !");
             } else {
                 checkInAppUpdate();
             }
@@ -119,8 +128,7 @@ public class SplashScreen extends AppCompatActivity {
         super.onResume();
 
         if (!new AppUtils().isInternetOn(SplashScreen.this)) {
-            Log.e(" Connection Error", "Internet connection not available");
-            createInfoDialog(SplashScreen.this, "No Internet Connection", "Please... Check your internet connection and Try again!");
+            createInfoDialog(SplashScreen.this, APP_NAME, "Please Check your internet connection and Try again!");
         } else {
             appUpdateInfoTask.addOnSuccessListener(new OnSuccessListener<AppUpdateInfo>() {
                 @Override
@@ -147,7 +155,7 @@ public class SplashScreen extends AppCompatActivity {
                 Log.d(TAG, "Update flow failed! Result code: " + resultCode);
                 //Toast.makeText(Splash.this,"Update flow failed",Toast.LENGTH_SHORT).show();
             }
-            Toast.makeText(this, "Start Download", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Start Download", Toast.LENGTH_SHORT).show();
             if (resultCode != RESULT_OK) {
                 Log.d("Result", "Update complete" + resultCode);
                 InstallStateUpdatedListener listener = new InstallStateUpdatedListener() {
@@ -180,6 +188,50 @@ public class SplashScreen extends AppCompatActivity {
             Log.e("####", e.getMessage().toString());
             return true;
         }
+    }
+
+
+    // CA Certificate find
+    public boolean getUser() {
+        try {
+            KeyStore ks = KeyStore.getInstance("AndroidCAStore");
+            if (ks != null) {
+                ks.load(null, null);
+                Enumeration<String> aliases = ks.aliases();
+
+                while (aliases.hasMoreElements()) {
+
+                    String alias = (String) aliases.nextElement();
+                    X509Certificate cert = (X509Certificate) ks.getCertificate(alias);
+                    if (alias.contains("user")) {
+                        //To print User Certs only
+                        if (cert.getIssuerDN().getName().contains("PortSwigger") ||
+                                cert.getIssuerDN().getName().contains("FiddlerRoot")) {
+                            return true;
+                        }
+                    }
+
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean getAddress() {
+        try {
+            ProxySelector pr = ProxySelector.getDefault();
+            ArrayList<Proxy> proxies = new ArrayList(pr.select(URI.create("URL")));
+            for (Proxy proxy : proxies) {
+                if (proxy.address() != null) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 

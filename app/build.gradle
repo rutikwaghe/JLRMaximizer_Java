@@ -26,7 +26,7 @@ android {
         applicationId "com.mobilestyx.JLRMaximizer"
         minSdk 23
         targetSdk 33
-        versionCode 14
+        versionCode 15
         versionName "2.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

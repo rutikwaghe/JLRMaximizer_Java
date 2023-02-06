@@ -81,11 +81,14 @@ public class MainActivity extends Activity {
     ScrollView scrollview2;
     PermissionsChecker checker;
     boolean isUrlOpenInMobileBrowser = false;
+    public String APP_NAME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        APP_NAME = getString(R.string.app_name);
+
         try {
             pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
         } catch (NameNotFoundException e1) {
@@ -121,7 +124,6 @@ public class MainActivity extends Activity {
         context = getApplicationContext();
 
         startWebView(GlobalVariable.getUrl());
-        Log.e(TAG, "proceedFurther:=========================================== " + GlobalVariable.getUrl());
     }
 
 
@@ -173,7 +175,7 @@ public class MainActivity extends Activity {
                 }
 
                 if (!AppUtils.isInternetOn(MainActivity.this)) {
-                    createInfoDialog(MainActivity.this, "No Internet Connection", "Please check your internet connection & try again !");
+                    createInfoDialog(MainActivity.this, APP_NAME, "Please check your internet connection & try again !");
                 } else {
                     if (url.endsWith("?type=relogin")) {
                         webView.loadUrl(getString(R.string.u5));
@@ -688,9 +690,9 @@ public class MainActivity extends Activity {
             public void onPageFinished(final WebView view, String url) {
                 if (
                         url.contains(getString(R.string.u9)) ||
-                        url.contains(getString(R.string.u8)) ||
-                        url.contains(getString(R.string.u11)) ||
-                        url.contains(getString(R.string.u120))
+                                url.contains(getString(R.string.u8)) ||
+                                url.contains(getString(R.string.u11)) ||
+                                url.contains(getString(R.string.u120))
                 ) {
                     Log.d(TAG, "onPageFinished: " + url);
                     homeBtn.setVisibility(View.VISIBLE);
@@ -714,7 +716,7 @@ public class MainActivity extends Activity {
                     webView.stopLoading();
                 } catch (Exception e) {
                 }
-                createInfoDialog(MainActivity.this, "No Internet Connection",
+                createInfoDialog(MainActivity.this, APP_NAME,
                         "Please check your internet connection & try again !");
                 super.onReceivedError(webView, errorCode, description,
                         failingUrl);

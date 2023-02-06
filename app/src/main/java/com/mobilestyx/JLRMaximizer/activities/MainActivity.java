@@ -258,6 +258,7 @@ public class MainActivity extends Activity {
                                 } catch (UnsupportedEncodingException e1) {
                                     // TODO Auto-generated catch block
                                     e1.printStackTrace();
+                                    createInfoDialog(MainActivity.this, "Network Connection", "Something went wrong, Please try after sometime!");
                                 }
 
 
@@ -313,6 +314,7 @@ public class MainActivity extends Activity {
                                 } catch (UnsupportedEncodingException e1) {
                                     // TODO Auto-generated catch block
                                     e1.printStackTrace();
+                                    createInfoDialog(MainActivity.this, "Network Connection", "Something went wrong, Please try after sometime!");
                                 }
 
 

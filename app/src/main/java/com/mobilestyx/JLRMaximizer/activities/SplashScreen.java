@@ -62,19 +62,21 @@ public class SplashScreen extends AppCompatActivity {
         appUpdateManager = AppUpdateManagerFactory.create(SplashScreen.this);
         appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
 
-        TextView versTextView = (TextView)findViewById(R.id.versionTextView);
-        versTextView.setText("Ver " +BuildConfig.VERSION_NAME);
+        TextView versTextView = (TextView) findViewById(R.id.versionTextView);
+        versTextView.setText("Ver " + BuildConfig.VERSION_NAME);
 
         try {
             pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
             versionCode = String.valueOf(BuildConfig.VERSION_CODE);
         } catch (PackageManager.NameNotFoundException e1) {
             e1.printStackTrace();
+            createInfoDialog(SplashScreen.this, "Network Connection", "Something went wrong, Please try after sometime!");
         }
 
+
+   
         RootBeer rootBeer = new RootBeer(SplashScreen.this);
         if (rootBeer.isRooted() || checkOTACerts()) {
-            Log.e(TAG, "ROOT DETECTED");
             createInfoDialog(SplashScreen.this, "Root Detected!", "Your device is Rooted! Please unroot the device to run the application.");
         } else {
             if (!AppUtils.isInternetOn(SplashScreen.this)) {
@@ -92,14 +94,12 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void onSuccess(AppUpdateInfo result) {
                 if (result.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE && result.isUpdateTypeAllowed(IMMEDIATE)) {
-                    Log.d(TAG, "onSuccess: Update Available");
                     try {
                         appUpdateManager.startUpdateFlowForResult(result, IMMEDIATE, SplashScreen.this, REQUEST_UPDATE_CODE);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 } else {
-                    Log.d(TAG, "onFailure: Update not Availablerror");
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -184,36 +184,36 @@ public class SplashScreen extends AppCompatActivity {
 
 
 //    api update code
-    public void checkupdate() {
-
-        UserService retrofit = ApiClient.getUserService();
-        Call<JsonObject> loginResponseCall = retrofit.splashVersion();
-
-        loginResponseCall.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.d(TAG, "SplashVersionCodebody: " + response.body());
-                Log.d(TAG, "SplashVersionCodeSuccess: " + response.isSuccessful());
-                latestVersion = String.valueOf(response);
-                if (!latestVersion.isEmpty() || latestVersion != null) {
-                    Log.d(TAG, "!latestVersion.trim().equals(versionCode.trim()): " + latestVersion.trim() + versionCode.trim());
-                    if (!latestVersion.trim().equals(versionCode.trim())) {
-                        createInfoDialog(SplashScreen.this, "Update Notice !", "You are using an outdated version, please uninstall your application and get the latest version from Google Play Store!");
-                    } else {
-                        Intent i = new Intent(SplashScreen.this, LoginActivity.class);
-                        startActivity(i);
-                        finish();
-                    }
-                } else {
-                    createInfoDialog(SplashScreen.this, "Connection Error !", "Application is facing difficulties in connecting to server. Please check your data connection or try after sometime");
-                }
-            }
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.d(TAG, "onFailureonFailureonFailure: " + t);
-            }
-        });
-    }
+//    public void checkupdate() {
+//
+//        UserService retrofit = ApiClient.getUserService();
+//        Call<JsonObject> loginResponseCall = retrofit.splashVersion();
+//
+//        loginResponseCall.enqueue(new Callback<JsonObject>() {
+//            @Override
+//            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+//                Log.d(TAG, "SplashVersionCodebody: " + response.body());
+//                Log.d(TAG, "SplashVersionCodeSuccess: " + response.isSuccessful());
+//                latestVersion = String.valueOf(response);
+//                if (!latestVersion.isEmpty() || latestVersion != null) {
+//                    Log.d(TAG, "!latestVersion.trim().equals(versionCode.trim()): " + latestVersion.trim() + versionCode.trim());
+//                    if (!latestVersion.trim().equals(versionCode.trim())) {
+//                        createInfoDialog(SplashScreen.this, "Update Notice !", "You are using an outdated version, please uninstall your application and get the latest version from Google Play Store!");
+//                    } else {
+//                        Intent i = new Intent(SplashScreen.this, LoginActivity.class);
+//                        startActivity(i);
+//                        finish();
+//                    }
+//                } else {
+//                    createInfoDialog(SplashScreen.this, "Connection Error !", "Application is facing difficulties in connecting to server. Please check your data connection or try after sometime");
+//                }
+//            }
+//            @Override
+//            public void onFailure(Call<JsonObject> call, Throwable t) {
+//                Log.d(TAG, "onFailureonFailureonFailure: " + t);
+//            }
+//        });
+//    }
 
 
 }

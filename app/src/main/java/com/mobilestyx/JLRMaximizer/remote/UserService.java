@@ -17,6 +17,6 @@ public interface UserService {
     @POST("login/validate_login_webservice")
     Call<JsonObject> userLogin(@Field("userid") String userid, @Field("password") String password);
 
-    @GET("app?name=JLRMax")
-    Call<JsonObject> splashVersion();
+//    @GET("app?name=JLRMax")
+//    Call<JsonObject> splashVersion();
 }

@@ -30,6 +30,7 @@ import com.google.gson.JsonObject;
 import com.mobilestyx.JLRMaximizer.R;
 import com.mobilestyx.JLRMaximizer.remote.ApiClient;
 import com.mobilestyx.JLRMaximizer.remote.UserService;
+import com.mobilestyx.JLRMaximizer.utils.AppUtils;
 import com.mobilestyx.JLRMaximizer.utils.GlobalVariable;
 import com.mobilestyx.JLRMaximizer.utils.MCrypt;
 
@@ -52,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
     private String encryptedUsername, encryptedPass;
     private String msgResponse, linkResponse, tokenResponse, mergedLinkWv;
     private EncryptedSharedPreferences sharedPreferences;
+
     MCrypt mcrypt = new MCrypt();
 
     @Override
@@ -90,11 +92,11 @@ public class LoginActivity extends AppCompatActivity {
                 username1 = username.getText().toString().trim();
                 password1 = password.getText().toString().trim();
                 if (username1.length() == 0) {
-                    Toast.makeText(getBaseContext(), "Please Enter User ID", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Please Enter User ID", Toast.LENGTH_SHORT).show();
                     username.requestFocus();
                     username.setText("");
                 } else if (password1.length() == 0) {
-                    Toast.makeText(getBaseContext(), "Please Enter Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Please Enter Password", Toast.LENGTH_SHORT).show();
                     password.requestFocus();
                     password.setText("");
                 } else {
@@ -118,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
             masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
         } catch (Exception e) {
             e.printStackTrace();
+            createInfoDialog(LoginActivity.this, "Network Connection", "Something went wrong, Please try after sometime!");
         }
 
         try {
@@ -130,6 +133,7 @@ public class LoginActivity extends AppCompatActivity {
             );
         } catch (Exception e) {
             e.printStackTrace();
+            createInfoDialog(LoginActivity.this, "Network Connection", "Something went wrong, Please try after sometime!");
         }
 
         try {
@@ -179,75 +183,86 @@ public class LoginActivity extends AppCompatActivity {
             encryptedPass = MCrypt.bytesToHex(mcrypt.encrypt(password1));
         } catch (Exception e) {
             e.printStackTrace();
+            createInfoDialog(LoginActivity.this, "Network Connection", "Something went wrong, Please try after sometime!");
         }
 
-        UserService retrofit = ApiClient.getUserService();
-        Call<JsonObject> loginResponseCall = retrofit.userLogin(encryptedUsername, encryptedPass);
-        loginResponseCall.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                pDialog.dismiss();
-                msgResponse = response.body().getAsJsonObject().get("msg").toString();
-                if (response.isSuccessful()) {
-                    if (msgResponse.contains("success")) {
+        if (!new AppUtils().isInternetOn(LoginActivity.this)) {
+            createInfoDialog(LoginActivity.this, "No Internet Connection", "Please... Check your internet connection and Try again!");
+        } else {
 
-                        linkResponse = response.body().getAsJsonObject().get("link").toString();
-                        tokenResponse = response.body().getAsJsonObject().get("token").toString();
-                        tokenResponse = tokenResponse.substring(1, tokenResponse.length() - 1);
-                        mergedLinkWv = getString(R.string.ulogin) + tokenResponse;
+            UserService retrofit = ApiClient.getUserService();
+            Call<JsonObject> loginResponseCall = retrofit.userLogin(encryptedUsername, encryptedPass);
 
-                        if (checkbox.isChecked() == true) {
-                            sharedPreferences.edit().putString("user", encryptedUsername).apply();
-                            sharedPreferences.edit().putString("pass", encryptedPass).apply();
+            loginResponseCall.enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    pDialog.dismiss();
+
+                    if (response != null && response.body() != null) {
+                        if (response.isSuccessful()) {
+                            try {
+                                msgResponse = response.body().getAsJsonObject().get("msg").toString();
+                                if (msgResponse.contains("success")) {
+
+                                    linkResponse = response.body().getAsJsonObject().get("link").toString();
+                                    tokenResponse = response.body().getAsJsonObject().get("token").toString();
+                                    tokenResponse = tokenResponse.substring(1, tokenResponse.length() - 1);
+                                    mergedLinkWv = getString(R.string.ulogin) + tokenResponse;
+
+                                    if (checkbox.isChecked() == true) {
+                                        sharedPreferences.edit().putString("user", encryptedUsername).apply();
+                                        sharedPreferences.edit().putString("pass", encryptedPass).apply();
+                                    } else {
+                                        sharedPreferences.edit().putString("user", "").apply();
+                                        sharedPreferences.edit().putString("pass", "").apply();
+                                    }
+                                    GlobalVariable.setUrl(mergedLinkWv);
+                                    Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent1);
+                                } else if (msgResponse.contains("edit")) {
+                                    if (checkbox.isChecked() == true) {
+                                        sharedPreferences.edit().putString("user", encryptedUsername).apply();
+                                        sharedPreferences.edit().putString("pass", encryptedPass).apply();
+                                    } else {
+                                        sharedPreferences.edit().putString("user", "").apply();
+                                        sharedPreferences.edit().putString("pass", "").apply();
+                                    }
+                                    GlobalVariable.setUrl(linkResponse);
+                                    Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent1);
+
+                                } else if (msgResponse.contains("Wrong User ID or Password!")) {
+                                    Log.d("TAG", "onSuccessLoginWrong !" + response.body().toString());
+                                    createInfoDialog(LoginActivity.this, APP_NAME, "Please enter a valid User ID & Password !!");
+
+                                } else if (msgResponse.contains("User exceeded max login attempt.")) {
+                                    Log.d("TAG", "onSuccessLoginexceeded !" + response.body().toString());
+                                    createInfoDialog(LoginActivity.this, APP_NAME, "Your account has been disabled for security reasons ! Please try again later in sometime !");
+
+                                } else {
+                                    linkResponse = null;
+                                    msgResponse = null;
+                                    Toast.makeText(LoginActivity.this, "Login Unsuccessful!", Toast.LENGTH_LONG).show();
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Toast.makeText(LoginActivity.this, "Something Went Wrong, Please try after sometime!", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
-                            sharedPreferences.edit().putString("user", "").apply();
-                            sharedPreferences.edit().putString("pass", "").apply();
+                            Toast.makeText(LoginActivity.this, "Login Unsuccessful!", Toast.LENGTH_LONG).show();
                         }
-                        GlobalVariable.setUrl(mergedLinkWv);
-                        Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent1);
-                    } else if (msgResponse.contains("edit")) {
-                        if (checkbox.isChecked() == true) {
-                            sharedPreferences.edit().putString("user", encryptedUsername).apply();
-                            sharedPreferences.edit().putString("pass", encryptedPass).apply();
-                        } else {
-                            sharedPreferences.edit().putString("user", "").apply();
-                            sharedPreferences.edit().putString("pass", "").apply();
-                        }
-                        GlobalVariable.setUrl(linkResponse);
-                        Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent1);
-
-                    } else if (msgResponse.contains("Wrong User ID or Password!")) {
-                        Log.d("TAG", "onSuccessLoginWrong !" + response.body().toString());
-                        createInfoDialog(LoginActivity.this, APP_NAME, "Please enter a valid User ID & Password !!");
-
-                    } else if (msgResponse.contains("User exceeded max login attempt.")) {
-                        Log.d("TAG", "onSuccessLoginexceeded !" + response.body().toString());
-                        createInfoDialog(LoginActivity.this, APP_NAME, "Your account has been disabled for security reasons ! Please try again later in sometime !");
-
                     } else {
-//                      timeRemaining = null;
-                        linkResponse = null;
-                        msgResponse = null;
-                        createInfoDialog(LoginActivity.this, APP_NAME, "Login Unsuccessful");
-//                      Toast.makeText(LoginActivity.this, "Login Unsuccessful", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, "Login Unsuccessful!", Toast.LENGTH_LONG).show();
                     }
-                } else {
-                    createInfoDialog(LoginActivity.this, APP_NAME, "Something went wrong, Please try again later");
-//                  Toast.makeText(LoginActivity.this, "Something went wrong, Please try again later", Toast.LENGTH_LONG).show();
                 }
-            }
 
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                pDialog.dismiss();
-                Toast.makeText(LoginActivity.this, "Login Unsuccessful, Please try after sometime", Toast.LENGTH_LONG).show();
-                Log.d("TAG", "onFailure: " + t);
-            }
-        });
-
-
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    pDialog.dismiss();
+                    Toast.makeText(LoginActivity.this, "Login Unsuccessful!", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
     public void delayLogout() {
